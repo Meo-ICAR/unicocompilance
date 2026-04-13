@@ -20,8 +20,6 @@ return new class extends Migration {
             $table->uuid('certificate_document_id')->nullable()->comment('Logical FK: db_unicodoc.documents');
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('user_id', 'idx_training_user');
         });

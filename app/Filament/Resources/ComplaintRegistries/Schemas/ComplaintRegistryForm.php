@@ -21,7 +21,7 @@ class ComplaintRegistryForm
                             ->label('Numero Reclamo')
                             ->placeholder('es. REC-2024-001')
                             ->required()
-                            ->unique(),
+                            ->unique()
                             ->disabled(fn (callable $get): bool => $get('id') !== null),
                         Forms\Components\TextInput::make('complainant_name')
                             ->label('Nome Richiedente')
@@ -63,5 +63,6 @@ class ComplaintRegistryForm
                             ->required()
                             ->live(),
                     ]),
-            ])
+            ]);
+    }
 }

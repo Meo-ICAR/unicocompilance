@@ -46,7 +46,7 @@ class GdprDsrRequestForm
                             ->label('Data Scadenza')
                             ->required()
                             ->displayFormat('d/m/Y')
-                            ->helper('Calcolata automaticamente: +30 giorni dalla data di ricezione'),
+                            ->helper('Calcolata automaticamente: +30 giorni dalla data di ricezione')
                             ->minDate(fn (callable $get): string => $get('received_at') ?? now()->toDateString()),
                         Forms\Components\TextInput::make('unicodoc_request_id')
                             ->label('Riferimento UnicoDoc')
@@ -64,5 +64,6 @@ class GdprDsrRequestForm
                             ->required()
                             ->live(),
                     ]),
-            ])
+            ]);
+    }
 }

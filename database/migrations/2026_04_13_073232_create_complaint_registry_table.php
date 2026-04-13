@@ -21,8 +21,6 @@ return new class extends Migration {
             $table->string('status', 30)->comment('Enum: open, investigating, resolved, rejected');
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('company_id', 'idx_complaint_company');
         });

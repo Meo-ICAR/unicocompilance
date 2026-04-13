@@ -49,5 +49,6 @@ class TrainingRegistryForm
                             ->maxSize(5120) // 5MB
                             ->directory('training-certificates'),
                     ]),
-            ])
+            ]);
+    }
 }

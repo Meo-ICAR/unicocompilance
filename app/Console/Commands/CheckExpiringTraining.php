@@ -6,7 +6,7 @@
  * CONSTRAINTS: Interroga TrainingRegistry e registra log di audit/sistema.
  */
 
-namespace App\Console\Commands\Compliance;
+namespace App\Console\Commands;
 
 use App\Models\TrainingRegistry;
 use Illuminate\Console\Command;

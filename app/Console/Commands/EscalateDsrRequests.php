@@ -6,7 +6,7 @@
  * CONSTRAINTS: Usa Enums PHP 8.4 e Spatie Activity Log per tracciare l'automazione.
  */
 
-namespace App\Console\Commands\Compliance;
+namespace App\Console\Commands;
 
 use App\Enums\GdprDsrStatus;
 use App\Models\GdprDsrRequest;

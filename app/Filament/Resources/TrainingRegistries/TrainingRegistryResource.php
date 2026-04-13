@@ -28,7 +28,7 @@ class TrainingRegistryResource extends Resource
 
     protected static ?string $pluralLabel = 'Registro Formazione';
 
-    protected static ?string $navigationGroup = 'Compliance';
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
 
     protected static ?int $navigationSort = 50;
 

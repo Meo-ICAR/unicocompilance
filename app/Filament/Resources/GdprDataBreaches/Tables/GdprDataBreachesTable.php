@@ -44,7 +44,7 @@ class GdprDataBreachesTable
                         'investigating' => 'warning',
                         'contained' => 'info',
                         'closed' => 'success',
-                    }),
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'investigating' => 'In Investigazione',
                         'contained' => 'Contenuto',
@@ -53,11 +53,11 @@ class GdprDataBreachesTable
                     }),
                 Tables\Columns\TextColumn::make('incident_date')
                     ->label('Data Incidente')
-                    ->dateTime('d/m/Y'),
+                    ->dateTime('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('discovery_date')
                     ->label('Data Scoperta')
-                    ->dateTime('d/m/Y'),
+                    ->dateTime('d/m/Y')
                     ->sortable(),
             ])
             ->filters([
@@ -97,6 +97,6 @@ class GdprDataBreachesTable
             ])
             ->emptyStateHeading('Nessuna violazione dati trovata')
             ->emptyStateDescription('Registra la tua prima violazione dati GDPR.')
-            ->emptyStateIcon('heroicon-o-shield-exclamation')
+            ->emptyStateIcon('heroicon-o-shield-exclamation');
     }
 }

@@ -117,6 +117,6 @@ class GdprDsrRequestsTable
             ])
             ->emptyStateHeading('Nessuna richiesta DSR trovata')
             ->emptyStateDescription('Crea la tua prima richiesta DSR.')
-            ->emptyStateIcon('heroicon-o-document-text')
+            ->emptyStateIcon('heroicon-o-document-text');
     }
 }

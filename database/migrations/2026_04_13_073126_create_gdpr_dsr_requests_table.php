@@ -21,8 +21,6 @@ return new class extends Migration {
             $table->string('status', 30)->comment('Enum: pending, extended, fulfilled, rejected');
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('company_id', 'idx_compliance_dsr_company');
             $table->index('unicodoc_request_id', 'idx_compliance_dsr_unicodoc');

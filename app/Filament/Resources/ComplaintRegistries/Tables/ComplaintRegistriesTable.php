@@ -62,7 +62,7 @@ class ComplaintRegistriesTable
                 Tables\Columns\TextColumn::make('financial_impact')
                     ->label('Impatto Finanziario')
                     ->money('EUR')
-                    ->alignEnd(),
+                    ->alignEnd()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('status')
                     ->label('Stato')
@@ -125,6 +125,6 @@ class ComplaintRegistriesTable
             ])
             ->emptyStateHeading('Nessun reclamo trovato')
             ->emptyStateDescription('Crea il tuo primo reclamo.')
-            ->emptyStateIcon('heroicon-o-chat-bubble-left-right')
+            ->emptyStateIcon('heroicon-o-chat-bubble-left-right');
     }
 }

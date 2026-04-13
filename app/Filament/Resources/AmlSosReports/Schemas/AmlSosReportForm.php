@@ -67,14 +67,14 @@ class AmlSosReportForm
                         Forms\Components\TextInput::make('fiu_protocol_number')
                             ->label('Protocollo UIF')
                             ->placeholder('es. UIF-2024-12345')
-                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu')),
+                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu'))
                             ->required(fn (callable $get): bool => $get('forwarded_to_fiu')),
                         Forms\Components\FileUpload::make('receipt_document_id')
                             ->label('Documento Ricevuta UIF')
                             ->helper('Carica la ricevuta ufficiale della UIF')
-                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu')),
+                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu'))
                             ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png'])
-                            ->maxSize(5120), // 5MB
+                            ->maxSize(5120) // 5MB
                             ->directory('aml-receipts'),
                     ]),
                 Forms\Components\Section::make('gestione_stato')
@@ -88,5 +88,6 @@ class AmlSosReportForm
                             ->required()
                             ->live(),
                     ]),
-            ])
+            ]);
+    }
 }

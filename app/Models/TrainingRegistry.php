@@ -52,6 +52,6 @@ class TrainingRegistry extends Model
             return null;
         }
 
-        return now()->diffInDays($this->valid_until, false);
+        return (int) now()->diffInDays($this->valid_until, false);
     }
 }

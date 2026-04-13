@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->dateTime('approved_by_compliance_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('user_id', 'idx_conflict_user');
         });

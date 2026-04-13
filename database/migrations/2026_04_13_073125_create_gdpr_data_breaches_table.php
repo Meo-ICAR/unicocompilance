@@ -23,8 +23,6 @@ return new class extends Migration {
             $table->string('status', 30)->comment('Enum: investigating, contained, closed');
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('company_id', 'idx_compliance_breach_company');
         });

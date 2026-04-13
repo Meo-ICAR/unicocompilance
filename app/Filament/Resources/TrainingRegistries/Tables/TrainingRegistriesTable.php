@@ -101,6 +101,6 @@ class TrainingRegistriesTable
             ])
             ->emptyStateHeading('Nessun corso di formazione trovato')
             ->emptyStateDescription('Registra il tuo primo corso di formazione.')
-            ->emptyStateIcon('heroicon-o-academic-cap')
+            ->emptyStateIcon('heroicon-o-academic-cap');
     }
 }

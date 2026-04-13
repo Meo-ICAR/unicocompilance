@@ -8,11 +8,8 @@ use App\Models\GdprDsrRequest;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
-class ComplianceStatsOverview extends BaseWidget
+class ComplianceOverview extends BaseWidget
 {
-    // Aggiorna i dati ogni 60 secondi in background
-    protected static ?string $pollingInterval = '60s';
-
     protected function getStats(): array
     {
         // 1. DSR Privacy in Scadenza (< 5 giorni)

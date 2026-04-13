@@ -27,8 +27,6 @@ return new class extends Migration {
             $table->string('status', 30)->comment('Enum: drafted, evaluating, reported, archived');
             $table->timestamps();
             $table->softDeletes();
-            $table->userstamps();
-            $table->softUserstamps();
 
             $table->index('company_id', 'idx_aml_company');
             $table->index('agent_id', 'idx_aml_agent');

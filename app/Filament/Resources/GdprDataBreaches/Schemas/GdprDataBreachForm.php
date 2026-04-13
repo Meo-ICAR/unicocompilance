@@ -62,12 +62,12 @@ class GdprDataBreachForm
                     ->schema([
                         Forms\Components\Toggle::make('is_notified_to_authority')
                             ->label('Notificata all\'Autorità')
-                            ->helper('Se selezionato, la data di notifica diventa obbligatoria'),
+                            ->helper('Se selezionato, la data di notifica diventa obbligatoria')
                             ->live(),
                         Forms\Components\DateTimePicker::make('notification_date')
                             ->label('Data Notifica')
                             ->displayFormat('d/m/Y')
-                            ->visible(fn (callable $get): bool => $get('is_notified_to_authority')),
+                            ->visible(fn (callable $get): bool => $get('is_notified_to_authority'))
                             ->required(fn (callable $get): bool => $get('is_notified_to_authority')),
                     ]),
                 Forms\Components\Section::make('gestione_stato')
@@ -81,5 +81,6 @@ class GdprDataBreachForm
                             ->required()
                             ->live(),
                     ]),
-            ])
+            ]);
+    }
 }

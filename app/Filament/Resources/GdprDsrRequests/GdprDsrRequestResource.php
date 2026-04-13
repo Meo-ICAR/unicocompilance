@@ -29,7 +29,7 @@ class GdprDsrRequestResource extends Resource
 
     protected static ?string $pluralLabel = 'Richieste DSR GDPR';
 
-    protected static ?string $navigationGroup = 'Compliance';
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
 
     protected static ?int $navigationSort = 40;
 
