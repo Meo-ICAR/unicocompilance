@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             TrainingRegistrySeeder::class,
             TrainingSessionSeeder::class,
             ConflictOfInterestSeeder::class,
+            OamCodeSeeder::class,
+            OamScopeSeeder::class,
         ]);
     }
 }
