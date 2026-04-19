@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\GdprDsrRequests\Tables;
 
-use App\Enums\GdprDsrStatus;
 use App\Models\GdprDsrRequest;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -26,8 +25,9 @@ class GdprDsrRequestsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
+            TextColumn::make('received_at')
+                    ->label('Data Ricezione')
+                    ->dateTime('d/m/Y')
                     ->sortable(),
                 TextColumn::make('subject_name')
                     ->label('Nome Soggetto')
@@ -53,10 +53,7 @@ class GdprDsrRequestsTable
                         'objection' => 'Opposizione al Trattamento',
                         default => $state,
                     }),
-                TextColumn::make('received_at')
-                    ->label('Data Ricezione')
-                    ->dateTime('d/m/Y')
-                    ->sortable(),
+
                 TextColumn::make('due_date')
                     ->label('Data Scadenza')
                     ->dateTime('d/m/Y')
@@ -111,16 +108,12 @@ class GdprDsrRequestsTable
             ])
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
-                RestoreAction::make(),
-                ForceDeleteAction::make(),
+           //     DeleteAction::make(),
+           //     RestoreAction::make(),
+            //    ForceDeleteAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
+
             ])
             ->emptyStateHeading('Nessuna richiesta DSR trovata')
             ->emptyStateDescription('Crea la tua prima richiesta DSR.')

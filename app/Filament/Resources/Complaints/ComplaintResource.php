@@ -20,7 +20,13 @@ class ComplaintResource extends Resource
 {
     protected static ?string $model = Complaint::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleOvalLeft;
+
+    protected static ?string $label = 'Reclamo';
+
+    protected static ?string $pluralLabel = 'Reclami';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
 
     public static function form(Schema $schema): Schema
     {

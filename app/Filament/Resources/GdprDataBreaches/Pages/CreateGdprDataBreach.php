@@ -8,4 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateGdprDataBreach extends CreateRecord
 {
     protected static string $resource = GdprDataBreachResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['company_id'] = filament()->getTenant()?->id;
+        return $data;
+    }
 }

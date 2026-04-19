@@ -21,7 +21,7 @@ class AmlSosReportResource extends Resource
 {
     protected static ?string $model = AmlSosReport::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedExclamationTriangle;
 
     protected static ?string $recordTitleAttribute = 'practice_reference';
 

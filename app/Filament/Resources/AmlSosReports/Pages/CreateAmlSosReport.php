@@ -8,4 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateAmlSosReport extends CreateRecord
 {
     protected static string $resource = AmlSosReportResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['company_id'] = filament()->getTenant()?->id;
+        return $data;
+    }
 }

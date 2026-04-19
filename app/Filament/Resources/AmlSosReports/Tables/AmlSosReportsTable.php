@@ -24,15 +24,14 @@ class AmlSosReportsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')->sortable(),
-                // Utilizza la relazione logica BelongsTo configurata sul Model
+              TextColumn::make('practice_reference')
+                    ->label('Rif. Pratica BPM')
+                    ->searchable(),
                 TextColumn::make('agent.name')
                     ->label('Agente')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('practice_reference')
-                    ->label('Rif. Pratica BPM')
-                    ->searchable(),
+
                 TextColumn::make('status')
                     ->label('Stato')
                     ->badge()

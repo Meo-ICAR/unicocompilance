@@ -8,7 +8,6 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\GdprDsrStatus;
 use App\Models\GdprDsrRequest;
 use Illuminate\Console\Command;
 
@@ -22,7 +21,7 @@ class EscalateDsrRequests extends Command
         $criticalDate = today()->addDays(5);
 
         // Seleziona solo le pratiche 'pending' vicine alla scadenza
-        $criticalRequests = GdprDsrRequest::where('status', GdprDsrStatus::PENDING)
+        $criticalRequests = GdprDsrRequest::where('status', 'pending')
             ->whereDate('due_date', '<=', $criticalDate)
             ->get();
 

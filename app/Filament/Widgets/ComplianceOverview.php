@@ -2,9 +2,9 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\AmlReportStatus;
-use App\Enums\GdprDsrStatus;
 use App\Models\AmlSosReport;
 use App\Models\GdprDsrRequest;
+use App\Models\TrainingRegistry;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -13,7 +13,7 @@ class ComplianceOverview extends BaseWidget
     protected function getStats(): array
     {
         // 1. DSR Privacy in Scadenza (< 5 giorni)
-        $urgentDsrs = GdprDsrRequest::where('status', GdprDsrStatus::PENDING)
+        $urgentDsrs = GdprDsrRequest::where('status', 'pending')
             ->whereDate('due_date', '<=', today()->addDays(5))
             ->count();
 

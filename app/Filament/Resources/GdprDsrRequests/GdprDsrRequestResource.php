@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\GdprDsrRequests;
 
-use App\Enums\GdprDsrStatus;
 use App\Filament\Resources\GdprDsrRequests\Pages\CreateGdprDsrRequest;
 use App\Filament\Resources\GdprDsrRequests\Pages\EditGdprDsrRequest;
 use App\Filament\Resources\GdprDsrRequests\Pages\ListGdprDsrRequests;
@@ -25,13 +24,13 @@ class GdprDsrRequestResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'subject_name';
 
-    protected static ?string $label = 'Richieste DSR GDPR';
+    protected static ?string $label = 'Richieste Privacy';
 
-    protected static ?string $pluralLabel = 'Richieste DSR GDPR';
+    protected static ?string $pluralLabel = 'Richieste Privacy';
 
     protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
 
-    protected static ?int $navigationSort = 40;
+    protected static ?int $navigationSort = 60;
 
     public static function form(Schema $schema): Schema
     {

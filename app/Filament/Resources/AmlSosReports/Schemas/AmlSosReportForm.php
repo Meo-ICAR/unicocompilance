@@ -2,10 +2,15 @@
 
 namespace App\Filament\Resources\AmlSosReports\Schemas;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components;
 use App\Enums\AmlReportStatus;
-use App\Models\AmlSosReport;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class AmlSosReportForm
 {
@@ -13,31 +18,31 @@ class AmlSosReportForm
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('informazioni_pratica')
+                Section::make('informazioni_pratica')
                     ->label('Informazioni Pratica')
                     ->description('Dettagli generali della segnalazione AML')
                     ->icon('heroicon-o-document-text')
                     ->schema([
-                        Forms\Components\TextInput::make('practice_reference')
+                        TextInput::make('practice_reference')
                             ->label('Riferimento Pratica BPM')
                             ->placeholder('es. PRJ-2024-001')
                             ->required(),
-                        Forms\Components\Select::make('agent_id')
+                        Select::make('agent_id')
                             ->label('Agente')
                             ->relationship('agent')
                             ->searchable()
                             ->preload()
                             ->required(),
-                        Forms\Components\Textarea::make('internal_evaluation')
+                        Textarea::make('internal_evaluation')
                             ->label('Valutazione Interna')
                             ->rows(3),
                     ]),
-                Forms\Components\Section::make('dettagli_sospetto')
+                Section::make('dettagli_sospetto')
                     ->label('Dettagli Sospetto')
                     ->description('Indicatori di anomalia e misure di contenimento')
                     ->icon('heroicon-o-shield-exclamation')
                     ->schema([
-                        Forms\Components\CheckboxList::make('suspicion_indicators')
+                        CheckboxList::make('suspicion_indicators')
                             ->label('Indicatori Sospetto')
                             ->options([
                                 '1A' => 'Operazioni sospette per importo elevato',
@@ -52,37 +57,38 @@ class AmlSosReportForm
                                 '5B' => 'Operazioni in contanti anomale',
                             ])
                             ->required(),
-                        Forms\Components\Textarea::make('containment_measures')
+                        Textarea::make('containment_measures')
                             ->label('Misure di Contenimento')
                             ->rows(4),
                     ]),
-                Forms\Components\Section::make('notifica_uif')
+                Section::make('notifica_uif')
                     ->label('Notifica UIF')
                     ->description('Gestione della comunicazione alle autorità')
                     ->icon('heroicon-o-flag')
                     ->schema([
-                        Forms\Components\Toggle::make('forwarded_to_fiu')
+                        Toggle::make('forwarded_to_fiu')
                             ->label('Inoltrata alla UIF')
-                            ->helper('Se selezionato, il protocollo UIF diventa obbligatorio'),
-                        Forms\Components\TextInput::make('fiu_protocol_number')
+                            ->helperText('Se selezionato, il protocollo UIF diventa obbligatorio')
+                            ->live(),
+                        TextInput::make('fiu_protocol_number')
                             ->label('Protocollo UIF')
                             ->placeholder('es. UIF-2024-12345')
-                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu'))
-                            ->required(fn (callable $get): bool => $get('forwarded_to_fiu')),
-                        Forms\Components\FileUpload::make('receipt_document_id')
+                            ->visible(fn (callable $get): bool => (bool) $get('forwarded_to_fiu'))
+                            ->required(fn (callable $get): bool => (bool) $get('forwarded_to_fiu')),
+                        FileUpload::make('receipt_document_id')
                             ->label('Documento Ricevuta UIF')
-                            ->helper('Carica la ricevuta ufficiale della UIF')
-                            ->visible(fn (callable $get): bool => $get('forwarded_to_fiu'))
+                            ->helperText('Carica la ricevuta ufficiale della UIF')
+                            ->visible(fn (callable $get): bool => (bool) $get('forwarded_to_fiu'))
                             ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png'])
-                            ->maxSize(5120) // 5MB
+                            ->maxSize(5120)
                             ->directory('aml-receipts'),
                     ]),
-                Forms\Components\Section::make('gestione_stato')
+                Section::make('gestione_stato')
                     ->label('Gestione Stato')
                     ->description('Controllo dello stato della segnalazione')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->schema([
-                        Forms\Components\Select::make('status')
+                        Select::make('status')
                             ->label('Stato')
                             ->options(AmlReportStatus::class)
                             ->required()

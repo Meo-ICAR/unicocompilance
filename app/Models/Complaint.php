@@ -52,7 +52,7 @@ class Complaint extends Model
                     return 0;
                 }
                 $end = $this->resolved_at instanceof Carbon ? $this->resolved_at : now();
-                return (int) $this->received_at;  // ->diffInDays($end);
+                return (int) $this->received_at->diffInDays($end);
             },
         );
     }
