@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('aml_sos_reports', function (Blueprint $table) {
             $table->id();
-            $table->uuid('company_id');
+            $table->uuid('company_id')->comment('Logical FK: db_bpm.companies');
             $table->uuid('agent_id')->comment('Logical FK: db_bpm.users/agents');
             $table->string('practice_reference', 100)->nullable()->comment('Logical FK: db_bpm.practices');
             $table->json('suspicion_indicators')->comment('Bank of Italy anomaly codes');
@@ -28,9 +28,9 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('company_id', 'idx_aml_company');
-            $table->index('agent_id', 'idx_aml_agent');
-            $table->index('practice_reference', 'idx_aml_practice');
+            //   $table->index('company_id', 'idx_aml_company');
+            //  $table->index('agent_id', 'idx_aml_agent');
+            //    $table->index('practice_reference', 'idx_aml_practice');
         });
     }
 

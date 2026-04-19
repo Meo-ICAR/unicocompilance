@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyBranch extends Model
 {
     // use HasFactory;
-
-    protected $connection = 'compilio';
+    protected $connection = 'bpm';
 
     protected $fillable = [
         'company_id',

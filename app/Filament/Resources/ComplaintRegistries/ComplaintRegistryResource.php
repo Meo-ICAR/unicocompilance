@@ -29,7 +29,7 @@ class ComplaintRegistryResource extends Resource
 
     protected static ?string $pluralLabel = 'Registro Reclami';
 
-   // protected static ?string $navigationGroup = 'Compliance';
+    // protected static ?string $navigationGroup = 'Compliance';
 
     protected static ?int $navigationSort = 20;
 

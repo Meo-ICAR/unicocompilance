@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('conflict_of_interest_registry', function (Blueprint $table) {
             $table->id();
+            $table->uuid('company_id')->comment('Logical FK: db_bpm.companies');
             $table->unsignedBigInteger('user_id')->comment('Logical FK: db_bpm.users');
             $table->text('conflict_description');
             $table->text('mitigation_strategy')->nullable();
@@ -19,7 +20,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('user_id', 'idx_conflict_user');
+            //  $table->index('user_id', 'idx_conflict_user');
         });
     }
 

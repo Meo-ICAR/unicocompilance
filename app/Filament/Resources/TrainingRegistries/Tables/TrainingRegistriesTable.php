@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\TrainingRegistries\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Tables\Table;
-use Filament\Tables\Columns;
-use App\Models\TrainingRegistry;
 use App\Enums\RegulatoryFramework;
+use App\Models\TrainingRegistry;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns;
+use Filament\Tables\Table;
 
 class TrainingRegistriesTable
 {
@@ -30,7 +30,7 @@ class TrainingRegistriesTable
                 Tables\Columns\TextColumn::make('regulatory_framework')
                     ->label('Quadro Normativo')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'ivass' => 'primary',
                         'oam' => 'warning',
                         'gdpr' => 'danger',
@@ -40,7 +40,7 @@ class TrainingRegistriesTable
                         'risk' => 'warning',
                         'compliance' => 'primary',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'ivass' => 'IVASS',
                         'oam' => 'OAM',
                         'gdpr' => 'GDPR',
@@ -59,7 +59,7 @@ class TrainingRegistriesTable
                     ->label('Valido Fino al')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record): string => $record->valid_until && $record->valid_until->isPast() ? 'danger' : 'success'),
+                    ->color(fn($record): string => $record->valid_until && $record->valid_until->isPast() ? 'danger' : 'success'),
                 Tables\Columns\IconColumn::make('certificate_document_id')
                     ->label('Certificato')
                     ->boolean()
@@ -85,10 +85,10 @@ class TrainingRegistriesTable
                     ]),
                 Tables\Filters\Filter::make('expired')
                     ->label('Solo Scaduti')
-                    ->query(fn ($query): Builder => $query->where('valid_until', '<', now())),
+                    ->query(fn($query): Builder => $query->where('valid_until', '<', now())),
                 Tables\Filters\Filter::make('certified')
                     ->label('Con Certificato')
-                    ->query(fn ($query): Builder => $query->whereNotNull('certificate_document_id')),
+                    ->query(fn($query): Builder => $query->whereNotNull('certificate_document_id')),
             ])
             ->recordActions([
                 Tables\Actions\EditAction::make(),

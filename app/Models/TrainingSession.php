@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\BPM\Company;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,5 +34,10 @@ class TrainingSession extends Model
     public function trainee(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('complaint_registry', function (Blueprint $table) {
             $table->id();
-            $table->uuid('company_id');
+            $table->uuid('company_id')->comment('Logical FK: db_bpm.companies');
             $table->string('complaint_number', 50)->unique();
             $table->string('complainant_name', 255);
             $table->string('category', 50)->comment('Enum: delay, behavior, privacy, fraud');
@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('company_id', 'idx_complaint_company');
+            // $table->index('company_id', 'idx_complaint_company');
         });
     }
 

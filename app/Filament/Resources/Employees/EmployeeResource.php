@@ -2,15 +2,14 @@
 
 namespace App\Filament\Resources\Employees;
 
-use App\Enums\EmployeeType;
-use App\Enums\SupervisorType;
+// use App\Enums\EmployeeType;
+// use App\Enums\SupervisorType;
 use App\Filament\Resources\Employees\Pages\CreateEmployee;
 use App\Filament\Resources\Employees\Pages\EditEmployee;
 use App\Filament\Resources\Employees\Pages\ListEmployees;
 use App\Filament\Resources\Employees\RelationManagers\BusinessFunctionsRelationManager;
+use App\Models\BPM\Employee;
 use App\Models\CompanyBranch;
-use App\Models\Employee;
-use BackedEnum;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
@@ -19,13 +18,14 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use BackedEnum;
 use UnitEnum;
 
 class EmployeeResource extends Resource
@@ -46,7 +46,6 @@ class EmployeeResource extends Resource
     {
         return $schema->schema([
             Tabs::make('employee_tabs')->tabs([
-
                 Tab::make('Anagrafica')->schema([
                     Section::make('Dati Personali')->schema([
                         TextInput::make('name')->label('Nome Completo')->required(),
@@ -57,33 +56,41 @@ class EmployeeResource extends Resource
                         TextInput::make('role_title')->label('Qualifica')->maxLength(100),
                         TextInput::make('department')->label('Dipartimento')->maxLength(100),
                     ])->columns(2),
-
                     Section::make('Contratto e Sede')->schema([
                         Select::make('employee_types')
                             ->label('Tipo Dipendente')
-                            ->options(collect(EmployeeType::cases())->mapWithKeys(fn ($e) => [$e->value => $e->getLabel()]))
+                            ->options([
+                                'dipendente' => 'Dipendente',
+                                'collaboratore' => 'Collaboratore',
+                                'consulente' => 'Consulente',
+                                'stagista' => 'Stagista',
+                                'altro' => 'Altro',
+                            ])
                             ->required(),
                         Select::make('supervisor_type')
                             ->label('Supervisore?')
-                            ->options(collect(SupervisorType::cases())->mapWithKeys(fn ($e) => [$e->value => $e->getLabel()]))
+                            ->options([
+                                'no' => 'No',
+                                'si' => 'Sì',
+                                'parziale' => 'Parziale',
+                            ])
                             ->required(),
                         DatePicker::make('hiring_date')->label('Data Assunzione'),
                         DatePicker::make('termination_date')->label('Data Fine Rapporto'),
                         Select::make('company_branch_id')
                             ->label('Sede')
-                            ->options(fn () => CompanyBranch::pluck('name', 'id'))
+                            ->options(fn() => CompanyBranch::pluck('name', 'id'))
                             ->searchable()
                             ->nullable(),
                         Select::make('coordinated_by_id')
                             ->label('Coordinatore')
-                            ->options(fn () => Employee::pluck('name', 'id'))
+                            ->options(fn() => Employee::pluck('name', 'id'))
                             ->searchable()
                             ->nullable(),
                         Toggle::make('is_structure')->label('Personale di Struttura'),
                         Toggle::make('is_ghost')->label('Personale Prestato'),
                     ])->columns(2),
                 ]),
-
                 Tab::make('OAM / IVASS / RUI')->schema([
                     Section::make('Registrazioni Normative')->schema([
                         TextInput::make('oam')->label('Codice OAM')->maxLength(100),
@@ -94,7 +101,6 @@ class EmployeeResource extends Resource
                         TextInput::make('ivass')->label('Codice IVASS')->maxLength(100),
                     ])->columns(2),
                 ]),
-
                 Tab::make('Privacy / GDPR')->schema([
                     Section::make('Dati Privacy')->schema([
                         TextInput::make('privacy_role')->label('Ruolo Privacy'),
@@ -107,7 +113,6 @@ class EmployeeResource extends Resource
                         Textarea::make('security_measures')->label('Misure di Sicurezza')->rows(3),
                     ])->columns(2),
                 ]),
-
             ])->columnSpanFull(),
         ]);
     }
@@ -123,7 +128,14 @@ class EmployeeResource extends Resource
                 TextColumn::make('employee_types')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => $state instanceof EmployeeType ? $state->getLabel() : $state),
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        'dipendente' => 'Dipendente',
+                        'collaboratore' => 'Collaboratore',
+                        'consulente' => 'Consulente',
+                        'stagista' => 'Stagista',
+                        'altro' => 'Altro',
+                        default => $state,
+                    }),
                 TextColumn::make('email')
                     ->label('Email')
                     ->searchable(),

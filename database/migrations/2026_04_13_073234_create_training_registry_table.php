@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('training_registry', function (Blueprint $table) {
             $table->id();
+            $table->uuid('company_id')->comment('Logical FK: db_bpm.companies');
             $table->unsignedBigInteger('user_id')->comment('Logical FK: db_bpm.users');
             $table->string('course_name', 255);
             $table->string('regulatory_framework', 50)->comment('Enum: ivass, oam, gdpr, safety');
@@ -21,7 +22,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('user_id', 'idx_training_user');
+            //  $table->index('user_id', 'idx_training_user');
         });
     }
 

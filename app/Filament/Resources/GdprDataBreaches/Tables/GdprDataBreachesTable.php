@@ -2,16 +2,23 @@
 
 namespace App\Filament\Resources\GdprDataBreaches\Tables;
 
+use App\Enums\GdprBreachStatus;
+use App\Models\GdprDataBreach;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use Filament\Tables\Columns;
-use App\Models\GdprDataBreach;
-use App\Enums\GdprBreachStatus;
 
 class GdprDataBreachesTable
 {
@@ -19,50 +26,49 @@ class GdprDataBreachesTable
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('company_id')
-                    ->label('Azienda')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nature_of_breach')
+                TextColumn::make('name')
+                    ->label('Nome'),
+                TextColumn::make('nature_of_breach')
                     ->label('Natura Violazione')
                     ->badge()
                     ->color('warning'),
-                Tables\Columns\TextColumn::make('subjects_affected_count')
+                TextColumn::make('subjects_affected_count')
                     ->label('Soggetti Coinvolti')
                     ->alignCenter(),
-                Tables\Columns\IconColumn::make('is_notified_to_authority')
+                IconColumn::make('is_notified_to_authority')
                     ->label('Notificata')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle'),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->label('Stato')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'investigating' => 'warning',
                         'contained' => 'info',
                         'closed' => 'success',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'investigating' => 'In Investigazione',
                         'contained' => 'Contenuto',
                         'closed' => 'Chiuso',
                         default => $state,
                     }),
-                Tables\Columns\TextColumn::make('incident_date')
+                TextColumn::make('incident_date')
                     ->label('Data Incidente')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('discovery_date')
+                TextColumn::make('discovery_date')
                     ->label('Data Scoperta')
                     ->dateTime('d/m/Y')
                     ->sortable(),
             ])
             ->filters([
                 TrashedFilter::make(),
-                Tables\Filters\SelectFilter::make('nature_of_breach')
+                SelectFilter::make('nature_of_breach')
                     ->label('Natura Violazione')
                     ->options([
                         'unauthorized_access' => 'Accesso Non Autorizzato',
@@ -74,7 +80,7 @@ class GdprDataBreachesTable
                         'human_error' => 'Errore Umano',
                         'other' => 'Altro',
                     ]),
-                Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->label('Stato')
                     ->options([
                         'investigating' => 'In Investigazione',
@@ -83,10 +89,10 @@ class GdprDataBreachesTable
                     ]),
             ])
             ->recordActions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                RestoreAction::make(),
+                ForceDeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

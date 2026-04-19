@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('company_id', 'idx_compliance_breach_company');
+            //  $table->index('company_id', 'idx_compliance_breach_company');
         });
     }
 

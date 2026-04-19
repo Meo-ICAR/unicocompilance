@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\BPM\Company;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // use Mattiverse\Userstamps\HasUserstamps;
 
 class TrainingRegistry extends Model
 {
+    protected $table = 'training_registry';
+
     protected $fillable = [
         'user_id',
         'course_name',
@@ -53,5 +57,10 @@ class TrainingRegistry extends Model
         }
 
         return (int) now()->diffInDays($this->valid_until, false);
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

@@ -1,13 +1,10 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,8 +12,10 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete();
-            $table->foreignId('employee_id')->nullable()->constrained('employees')->nullOnDelete();
+            $table->uuid('company_id')->comment('Logical FK: db_bpm.companies');
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('employee_id')->nullable();
+
             $table->date('received_at');
             $table->string('subject');
             $table->text('description');

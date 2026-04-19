@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('company_id', 'idx_compliance_dsr_company');
+            //     $table->index('company_id', 'idx_compliance_dsr_company');
             $table->index('unicodoc_request_id', 'idx_compliance_dsr_unicodoc');
         });
     }

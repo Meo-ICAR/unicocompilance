@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\BPM\Company;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // use Mattiverse\Userstamps\HasUserstamps;
@@ -9,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ConflictOfInterestRegistry extends Model
 {
     use SoftDeletes;  // , HasUserstamps;
+
+    protected $table = 'conflict_of_interest_registry';
 
     protected $fillable = [
         'user_id',
@@ -44,5 +48,10 @@ class ConflictOfInterestRegistry extends Model
     public function scopePending($query)
     {
         return $query->whereNull('approved_by_compliance_at');
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

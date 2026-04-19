@@ -53,6 +53,11 @@ class AmlSosReport extends Model
     // Relazione logica cross-database
     public function agent(): BelongsTo
     {
-        return $this->belongsTo(Agent::class, 'agent_id');
+        return $this->belongsTo(Agent::class, 'agent_id', 'id');
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

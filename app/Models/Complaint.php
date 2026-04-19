@@ -1,13 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -50,11 +48,11 @@ class Complaint extends Model
     {
         return Attribute::make(
             get: function (): int {
-                if (! $this->received_at instanceof Carbon) {
+                if (!$this->received_at instanceof Carbon) {
                     return 0;
                 }
                 $end = $this->resolved_at instanceof Carbon ? $this->resolved_at : now();
-                return (int) $this->received_at; //->diffInDays($end);
+                return (int) $this->received_at;  // ->diffInDays($end);
             },
         );
     }
@@ -62,6 +60,11 @@ class Complaint extends Model
     public function isOverdue(): bool
     {
         $closedStatuses = ['accolto', 'respinto'];
-        return ! in_array($this->status, $closedStatuses) && $this->days_elapsed > 45;
+        return !in_array($this->status, $closedStatuses) && $this->days_elapsed > 45;
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

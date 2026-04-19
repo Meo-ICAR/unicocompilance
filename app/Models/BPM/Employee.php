@@ -4,6 +4,7 @@ namespace App\Models\BPM;
 
 use App\Enums\EmployeeType;
 use App\Enums\SupervisorType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -56,8 +57,8 @@ class Employee extends Model
     ];
 
     protected $casts = [
-        'employee_types' => EmployeeType::class,
-        'supervisor_type' => SupervisorType::class,
+        'employee_types' => 'string',
+        'supervisor_type' => 'string',
         'oam_at' => 'date',
         'oam_dismissed_at' => 'date',
         'hiring_date' => 'date',
