@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\COMPILANCE;
 
 use App\Models\PROFORMA\Clienti;
 use App\Models\PROFORMA\Company;

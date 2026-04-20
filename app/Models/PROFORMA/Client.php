@@ -3,10 +3,13 @@
 namespace App\Models\PROFORMA;
 
 use App\Models\COMPILANCE\ClientType;
+use App\Models\COMPILANCE\Website;
+use App\Models\DOC\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // use Spatie\Activitylog\LogOptions;
@@ -94,6 +97,26 @@ class Client extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function websites()
+    {
+        return $this->morphMany(Website::class, 'websiteable');
+    }
+
+    public function trainingRecords(): MorphMany
+    {
+        return $this->morphMany(TrainingRecord::class, 'trainable');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
+
     public function clientType(): BelongsTo
     {
         return $this->belongsTo(ClientType::class);
@@ -109,13 +132,11 @@ class Client extends Model
         return $this->hasMany(Client::class, 'leadsource_id');
     }
 
-    protected function casts(): array
+    protected function fullName(): Attribute
     {
-        return [
-            'start_date' => 'date',
-            'end_date' => 'date',
-            // Aggiungi qui eventuali altri cast anagrafici (es. is_foreigner => 'boolean')
-        ];
+        return Attribute::make(
+            get: fn() => $this->is_person ? "{$this->name} {$this->first_name}" : $this->name,
+        );
     }
 
     /*

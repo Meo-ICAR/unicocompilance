@@ -9,8 +9,6 @@ use App\Filament\Resources\Companies\Pages\EditCompany;
 use App\Filament\Resources\Companies\Pages\ListCompanies;
 use App\Filament\Resources\Companies\RelationManagers\BranchesRelationManager;
 use App\Filament\Resources\Companies\RelationManagers\ClientsRelationManager;
-use App\Filament\Resources\Companies\RelationManagers\CompanyFunctionsRelationManager;
-use App\Filament\Resources\Companies\RelationManagers\SendersRelationManager;
 use App\Filament\Resources\Companies\RelationManagers\SoftwareApplicationsRelationManager;
 use App\Filament\Resources\Companies\Schemas\CompanyForm;
 use App\Filament\Resources\Companies\Tables\CompaniesTable;
@@ -57,8 +55,6 @@ class CompanyResource extends Resource
             DocumentsRelationManager::class,
             WebsitesRelationManager::class,
             ClientsRelationManager::class,
-            CompanyFunctionsRelationManager::class,
-            SendersRelationManager::class,
             BranchesRelationManager::class,
             SoftwareApplicationsRelationManager::class,
         ];

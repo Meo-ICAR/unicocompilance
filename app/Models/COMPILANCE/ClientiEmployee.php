@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Models\PROFORMA;
+namespace App\Models\COMPILANCE;
 
+use App\Models\PROFORMA\Clienti;
+use App\Models\PROFORMA\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Wildside\Userstamps\HasUserstamps;
+use Illuminate\Database\Eloquent\Model;
+// use Wildside\Userstamps\HasUserstamps;
 
 class ClientiEmployee extends Model
 {
-    use HasFactory, HasUserstamps;
+    use HasFactory;  // , HasUserstamps;
 
-    protected $connection = 'mysql_proforma';
+    protected $connection = 'mariadb';
 
     protected $table = 'clienti_employees';
 
@@ -86,22 +88,26 @@ class ClientiEmployee extends Model
 
     public function scopeCurrentlyActive($query)
     {
-        return $query->where('is_active', true)
+        return $query
+            ->where('is_active', true)
             ->where(function ($q) {
-                $q->whereNull('end_date')
-                  ->orWhere('end_date', '>=', now());
+                $q
+                    ->whereNull('end_date')
+                    ->orWhere('end_date', '>=', now());
             });
     }
 
     public function scopeExpired($query)
     {
-        return $query->whereNotNull('end_date')
+        return $query
+            ->whereNotNull('end_date')
             ->where('end_date', '<', now());
     }
 
     public function scopeExpiring($query, $days = 30)
     {
-        return $query->whereNotNull('end_date')
+        return $query
+            ->whereNotNull('end_date')
             ->where('end_date', '<=', now()->addDays($days))
             ->where('end_date', '>', now());
     }
@@ -141,8 +147,8 @@ class ClientiEmployee extends Model
             return false;
         }
 
-        return $this->end_date->isFuture() && 
-               $this->end_date->diffInDays(now()) <= 30;
+        return $this->end_date->isFuture() &&
+            $this->end_date->diffInDays(now()) <= 30;
     }
 
     public function getDaysUntilExpiry(): ?int
@@ -165,7 +171,7 @@ class ClientiEmployee extends Model
         }
 
         $start = $this->start_date->format('d/m/Y');
-        
+
         if ($this->end_date) {
             $end = $this->end_date->format('d/m/Y');
             return "Dal $start al $end";
@@ -193,7 +199,7 @@ class ClientiEmployee extends Model
 
     public function getStatusColorAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'Attivo' => 'success',
             'In scadenza' => 'warning',
             'Scaduto' => 'danger',
@@ -210,7 +216,7 @@ class ClientiEmployee extends Model
 
         // Try different name attributes based on common model patterns
         $nameAttributes = ['name', 'full_name', 'display_name', 'nome_completo'];
-        
+
         foreach ($nameAttributes as $attr) {
             if (isset($this->personable->{$attr})) {
                 return $this->personable->{$attr};

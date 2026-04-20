@@ -1,52 +1,46 @@
 <?php
 
-namespace App\Filament\Resources\Companies\Tables;
+namespace App\Filament\Resources\Addresses\Tables;
 
 // use App\Filament\Traits\CanExportTable;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CompaniesTable
+class AddressesTable
 {
-    //  use CanExportTable;
+    // use CanExportTable;
 
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn($query) => $query->orderBy('created_at', 'desc'))
             ->columns([
-                ImageColumn::make('logo_url')
-                    ->label('Logo')
-                    ->size(40)
-                    ->circular()
-                    ->defaultImageUrl(url('images/default-logo.png')),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('company_type_name')
-                    ->label('Tipo Società')
+                TextColumn::make('addressType.name')
+                    ->label('Tipo')
                     ->searchable()
-                    ->badge()
-                    ->color(fn($record) => $record->company_type_color),
-                TextColumn::make('vat_number')
-                    ->label('CF / Partita IVA')
-                    ->searchable(),
-                TextColumn::make('vat_name')
-                    ->searchable(),
-                TextColumn::make('oam')
-                    ->searchable(),
-                TextColumn::make('oam_at')
-                    ->date()
                     ->sortable(),
-                TextColumn::make('oam_name')
-                    ->searchable(),
+                TextColumn::make('street')
+                    ->label('Via')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('city')
+                    ->label('Città')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('zip_code')
+                    ->label('CAP')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
+                    ->label('Data Creazione')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Data Aggiornamento')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

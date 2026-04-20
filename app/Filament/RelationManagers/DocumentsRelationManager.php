@@ -2,11 +2,11 @@
 
 namespace App\Filament\RelationManagers;
 
-use App\Filament\Actions\BulkClassifyDocumentsAction;
-use App\Filament\Actions\ClassifyDocumentAction;
+// use App\Filament\Actions\BulkClassifyDocumentsAction;
+// use App\Filament\Actions\ClassifyDocumentAction;
+use App\Models\DOC\DocumentType;
 use App\Models\PROFORMA\Company;
 use App\Models\Document;
-use App\Models\DocumentType;
 use App\Models\Principal;
 use App\Models\Website;
 use App\Services\DocumentClassificationService;
@@ -22,7 +22,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+// use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -33,7 +33,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+// use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Enums\RecordActionsPosition;
@@ -150,51 +150,6 @@ class DocumentsRelationManager extends RelationManager
                         false: fn($query) => $query->where('expires_at', '>=', now()),
                         blank: fn($query) => $query,
                     ),
-                SelectFilter::make('document_type_id')
-                    ->label('Tipo Documento')
-                    ->options(function ($livewire) {
-                        $owner = $livewire->ownerRecord;
-                        $ownerClass = get_class($owner);
-
-                        // Use existing logic for all owner types including Company
-                        $types = DocumentType::query()
-                            ->when($ownerClass === 'App\Models\PROFORMA\Company', function ($query) {
-                                return $query->forCompanies();
-                            })
-                            ->when($ownerClass === 'App\Models\Agent', function ($query) {
-                                return $query->forAgents();
-                            })
-                            ->when($ownerClass === 'App\Models\Principal', function ($query) {
-                                return $query->forPrincipals();
-                            })
-                            ->when($ownerClass === 'App\Models\Client', function ($query) {
-                                return $query->forClients();
-                            })
-                            ->when($ownerClass === 'App\Models\Practice', function ($query) {
-                                return $query->forPractices();
-                            })
-                            ->pluck('name', 'id')
-                            ->sort()
-                            ->toArray();
-
-                        // Add null option for unclassified documents
-                        return ['null' => 'Senza tipo'] + $types;
-                    })
-                    ->placeholder('Tutti i tipi')
-                    ->default(null)
-                    ->query(function (Builder $query, array $data): Builder {
-                        $value = $data['value'] ?? null;
-
-                        if ($value === 'null') {
-                            // Filter for documents without document_type_id
-                            return $query->whereNull('document_type_id');
-                        } elseif ($value) {
-                            // Filter for specific document type
-                            return $query->where('document_type_id', $value);
-                        }
-
-                        return $query;
-                    }),
                 TernaryFilter::make('trashed')
                     ->label('Documenti Cancellati')
                     ->placeholder('Tutti i documenti')
@@ -274,97 +229,102 @@ class DocumentsRelationManager extends RelationManager
                                 Section::make('Carica File')
                                     ->description('Carica il documento in formato PDF, immagine o Word')
                                     ->schema([
-                                        SpatieMediaLibraryFileUpload::make('document')
-                                            ->label('File Documento')
-                                            ->collection('documents')
-                                            ->disk('public')
-                                            ->preserveFilenames()
-                                            ->downloadable()
-                                            ->previewable(true)
-                                            ->imageEditor()
-                                            ->maxSize(10240)  // 10MB
-                                            ->acceptedFileTypes([
-                                                'application/pdf',
-                                                'image/jpeg',
-                                                'image/png',
-                                                'image/jpg',
-                                                'application/msword',
-                                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                            ])
-                                            ->required(),
+                                        /*
+                                         * SpatieMediaLibraryFileUpload::make('document')
+                                         *     ->label('File Documento')
+                                         *     ->collection('documents')
+                                         *     ->disk('public')
+                                         *     ->preserveFilenames()
+                                         *     ->downloadable()
+                                         *     ->previewable(true)
+                                         *     ->imageEditor()
+                                         *     ->maxSize(10240)  // 10MB
+                                         *     ->acceptedFileTypes([
+                                         *         'application/pdf',
+                                         *         'image/jpeg',
+                                         *         'image/png',
+                                         *         'image/jpg',
+                                         *         'application/msword',
+                                         *         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                         *     ])
+                                         *     ->required(),
+                                         */
                                     ])
                             ])
                     ]),
-                Action::make('classify_company_documents')
-                    ->label('Classifica')
-                    ->icon('heroicon-o-magnifying-glass')
-                    ->color('warning')
-                    ->requiresConfirmation()
-                    ->modalHeading('Classifica Documenti')
-                    ->modalDescription('Classifica tutti i documenti non classificati  usando le regole dei tipi documento')
-                    ->modalSubmitActionLabel('Avvia Classificazione')
-                    ->action(function () {
-                        $classificationService = new DocumentClassificationService();
 
-                        try {
-                            // Get company_id using the generic method
-                            $companyId = $this->getCompanyIdFromOwner();
-
-                            if (!$companyId) {
-                                return;  // Error already handled in getCompanyIdFromOwner
-                            }
-
-                            // Get unclassified documents for this company
-                            $documents = Document::whereNull('document_type_id')
-                                ->whereHasMorph('documentable', ['App\Models\PROFORMA\Company', 'App\Models\Agent', 'App\Models\Principal',
-                                        'App\Models\Client', 'App\Models\Practice'], function ($query) use ($companyId) {
-                                    if ($query->getModel() instanceof \App\Models\PROFORMA\Company) {
-                                        $query->where('id', $companyId);
-                                    } else {
-                                        $query->where('company_id', $companyId);
-                                    }
-                                })
-                                ->get();
-
-                            $classified = 0;
-                            $unclassified = 0;
-
-                            foreach ($documents as $document) {
-                                $success = $classificationService->classifySingleDocument($document);
-
-                                if ($success) {
-                                    $classified++;
-                                } else {
-                                    $unclassified++;
-                                }
-                            }
-
-                            $message = "Classificazione company completata!\n"
-                                . "Documenti processati: {$documents->count()}\n"
-                                . "Classificati: {$classified}\n"
-                                . "Non classificati: {$unclassified}";
-
-                            Notification::make()
-                                ->title('Classificazione Company Completata')
-                                ->body($message)
-                                ->success()
-                                ->send();
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Errore Classificazione Company')
-                                ->body('Si è verificato un errore: ' . $e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
-                    }),
+                /*
+                 * Action::make('classify_company_documents')
+                 *     ->label('Classifica')
+                 *     ->icon('heroicon-o-magnifying-glass')
+                 *     ->color('warning')
+                 *     ->requiresConfirmation()
+                 *     ->modalHeading('Classifica Documenti')
+                 *     ->modalDescription('Classifica tutti i documenti non classificati  usando le regole dei tipi documento')
+                 *     ->modalSubmitActionLabel('Avvia Classificazione')
+                 *     ->action(function () {
+                 *         $classificationService = new DocumentClassificationService();
+                 *
+                 *         try {
+                 *             // Get company_id using the generic method
+                 *             $companyId = $this->getCompanyIdFromOwner();
+                 *
+                 *             if (!$companyId) {
+                 *                 return;  // Error already handled in getCompanyIdFromOwner
+                 *             }
+                 *
+                 *             // Get unclassified documents for this company
+                 *             $documents = Document::whereNull('document_type_id')
+                 *                 ->whereHasMorph('documentable', ['App\Models\PROFORMA\Company', 'App\Models\Agent', 'App\Models\Principal',
+                 *                         'App\Models\Client', 'App\Models\Practice'], function ($query) use ($companyId) {
+                 *                     if ($query->getModel() instanceof \App\Models\PROFORMA\Company) {
+                 *                         $query->where('id', $companyId);
+                 *                     } else {
+                 *                         $query->where('company_id', $companyId);
+                 *                     }
+                 *                 })
+                 *                 ->get();
+                 *
+                 *             $classified = 0;
+                 *             $unclassified = 0;
+                 *
+                 *             foreach ($documents as $document) {
+                 *                 $success = $classificationService->classifySingleDocument($document);
+                 *
+                 *                 if ($success) {
+                 *                     $classified++;
+                 *                 } else {
+                 *                     $unclassified++;
+                 *                 }
+                 *             }
+                 *
+                 *             $message = "Classificazione company completata!\n"
+                 *                 . "Documenti processati: {$documents->count()}\n"
+                 *                 . "Classificati: {$classified}\n"
+                 *                 . "Non classificati: {$unclassified}";
+                 *
+                 *             Notification::make()
+                 *                 ->title('Classificazione Company Completata')
+                 *                 ->body($message)
+                 *                 ->success()
+                 *                 ->send();
+                 *         } catch (\Exception $e) {
+                 *             Notification::make()
+                 *                 ->title('Errore Classificazione Company')
+                 *                 ->body('Si è verificato un errore: ' . $e->getMessage())
+                 *                 ->danger()
+                 *                 ->send();
+                 *         }
+                 *     }),
+                 */
             ])  // Action::make('create_document')
             ->actions([
                 // AZIONE PER VEDERE IL DOCUMENTO
                 EditAction::make()
                     ->label('Modifica')
                     ->modalHeading('Modifica'),
-                ClassifyDocumentAction::make()
-                    ->visible(fn($record) => $record && $record->document_type_id === null),
+                //     ClassifyDocumentAction::make()
+                //         ->visible(fn($record) => $record && $record->document_type_id === null),
                 Action::make('soft_delete')
                     ->label('Archivia')
                     ->icon('heroicon-o-archive-box-arrow-down')
@@ -396,7 +356,7 @@ class DocumentsRelationManager extends RelationManager
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    BulkClassifyDocumentsAction::make(),
+                    //   BulkClassifyDocumentsAction::make(),
                     DeleteBulkAction::make()
                         ->label('Elimina Selezionati'),
                 ])
@@ -458,23 +418,25 @@ class DocumentsRelationManager extends RelationManager
                 Section::make('File Documento')
                     ->description('Carica il documento in formato PDF, immagine o Word')
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('document')
-                            ->label('File Documento')
-                            ->collection('documents')
-                            ->disk('private')
-                            ->preserveFilenames()
-                            ->downloadable()
-                            ->previewable(true)
-                            ->imageEditor()
-                            ->maxSize(10240)  // 10MB
-                            ->acceptedFileTypes([
-                                'application/pdf',
-                                'image/jpeg',
-                                'image/png',
-                                'image/jpg',
-                                'application/msword',
-                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                            ]),
+                        /*
+                         * SpatieMediaLibraryFileUpload::make('document')
+                         *     ->label('File Documento')
+                         *     ->collection('documents')
+                         *     ->disk('private')
+                         *     ->preserveFilenames()
+                         *     ->downloadable()
+                         *     ->previewable(true)
+                         *     ->imageEditor()
+                         *     ->maxSize(10240)  // 10MB
+                         *     ->acceptedFileTypes([
+                         *         'application/pdf',
+                         *         'image/jpeg',
+                         *         'image/png',
+                         *         'image/jpg',
+                         *         'application/msword',
+                         *         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                         *     ]),
+                         */
                     ])
             ]);
     }

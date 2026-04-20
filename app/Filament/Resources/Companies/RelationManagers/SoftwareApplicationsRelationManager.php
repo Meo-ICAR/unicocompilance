@@ -4,11 +4,9 @@ namespace App\Filament\Resources\Companies\RelationManagers;
 
 use App\Models\SoftwareApplication;
 use Filament\Actions\Action;
-use Filament\Actions\AttachAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\DetachAction;
-use Filament\Actions\DetachBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -53,41 +51,14 @@ class SoftwareApplicationsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                AttachAction::make()
-                    ->label('Associa Software')
-                    ->form(fn(AttachAction $action): array => [
-                        $action->getRecordSelect(),
-                        Select::make('status')
-                            ->options([
-                                'ATTIVO' => 'Attivo',
-                                'SOSPESO' => 'Sospeso',
-                            ])
-                            ->default('ATTIVO')
-                            ->required(),
-                        Textarea::make('notes')
-                            ->label('Note Aziendali'),
-                    ]),
+                CreateAction::make()
+                    ->label('Aggiungi Software')
             ])
             ->actions([
                 EditAction::make()
-                    ->label('Modifica Associazione')
-                    ->form([
-                        Select::make('status')
-                            ->options([
-                                'ATTIVO' => 'Attivo',
-                                'SOSPESO' => 'Sospeso',
-                            ])
-                            ->required(),
-                        Textarea::make('notes')
-                            ->label('Note Aziendali'),
-                    ]),
-                \Filament\Actions\DetachAction::make()
-                    ->label('Rimuovi'),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DetachBulkAction::make(),
-                ]),
+                BulkActionGroup::make([]),
             ]);
     }
 }

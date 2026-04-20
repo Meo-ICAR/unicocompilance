@@ -2,21 +2,21 @@
 
 namespace App\Filament\Resources\Fornitoris\Schemas;
 
-use App\Model\Oam;
-use App\Services\ChecklistService;
-use App\Services\GeminiVisionService;
-use App\Traits\HasDocumentTypeFiltering;
+use App\Model\DB\Oam;
+// use App\Services\ChecklistService;
+// use App\Services\GeminiVisionService;
+// use App\Traits\HasDocumentTypeFiltering;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
+// use Filament\Actions\DeleteAction;
+// use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ImportAction;
+// use Filament\Actions\ImportAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+// use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -40,7 +40,7 @@ use Illuminate\Support\Str;
 
 class FornitoriForm
 {
-    use HasDocumentTypeFiltering;
+    // use HasDocumentTypeFiltering;
 
     public static function configure(Schema $schema): Schema
     {
@@ -65,14 +65,15 @@ class FornitoriForm
                                         return;
                                     }
 
-                                    $suggestions = \App\Models\Oam::where('name', 'LIKE', '%' . $state . '%')
+                                    $suggestions = Oam::where('name', 'LIKE', '%' . $state . '%')
                                         ->limit(5)
                                         ->pluck('name')
+                                        ->sort()
                                         ->toArray();
 
                                     if (!empty($suggestions)) {
                                         // Notifica l'utente con i suggerimenti
-                                        \Filament\Notifications\Notification::make()
+                                        Notification::make()
                                             ->title('Suggerimenti OAM')
                                             ->body('Nomi trovati: ' . implode(', ', $suggestions))
                                             ->info()
@@ -166,7 +167,7 @@ class FornitoriForm
                                         return;
                                     }
 
-                                    $oam = \App\Models\Oam::where('numero_iscrizione_rui', $state)->first();
+                                    $oam = Oam::where('numero_iscrizione_rui', $state)->first();
 
                                     if ($oam) {
                                         $set('oam_name', $oam->name);
@@ -204,9 +205,9 @@ class FornitoriForm
                             DatePicker::make('ivass_at')
                                 ->label('Data Iscrizione IVASS')
                                 ->displayFormat('d/m/Y'),
-                            SpatieMediaLibraryFileUpload::make('identity_document')
-                                ->collection('identity_documents')
-                                ->label('Documento di Identità'),
+                            //   SpatieMediaLibraryFileUpload::make('identity_document')
+                            //     ->collection('identity_documents')
+                            //   ->label('Documento di Identità'),
                             // TextInput::make('nome'),
                             // TextInput::make('cognome'),
                             // TextInput::make('numero_documento'),
@@ -233,84 +234,9 @@ class FornitoriForm
                             TextInput::make('vat_name')
                                 ->label('Ragione Sociale Fiscale')
                                 ->maxLength(255),
-                            TextInput::make('vat_number')
+                            TextInput::make('piva')
                                 ->label('CF / Partita IVA')
                                 ->maxLength(16),
-                            Select::make('enasarco')
-                                ->label('Posizione Enasarco')
-                                ->options([
-                                    'no' => 'Non soggetto',
-                                    'monomandatario' => 'Monomandatario',
-                                    'plurimandatario' => 'Plurimandatario',
-                                    'societa' => 'Società di Capitali',
-                                ])
-                                ->default('no'),
-                            TextInput::make('contoCOGE')
-                                ->label('Conto COGE (Contabilità)')
-                                ->maxLength(255)
-                                ->helperText("Codice conto per l'esportazione in contabilità."),
-                        ]),
-                    ]),
-                // 4. SEZIONE CONTRIBUTI E RIMBORSI
-                Section::make('Condizioni Economiche Fisse')
-                    ->collapsible()
-                    ->collapsed()
-                    ->description('Fee fisse mensili, rimborsi e addebiti ricorrenti (Desk, CRM, ecc.).')
-                    ->icon('heroicon-o-currency-euro')
-                    ->schema([
-                        Grid::make(3)->schema([
-                            TextInput::make('contribute')
-                                ->label('Addebito Fisso (Desk/CRM)')
-                                ->numeric()
-                                ->prefix('€')
-                                ->maxValue(99999999.99),
-                            TextInput::make('contributeFrequency')
-                                ->label('Frequenza addebito (Mesi)')
-                                ->numeric()
-                                ->default(1)
-                                ->minValue(1)
-                                ->maxValue(12),
-                            DatePicker::make('contributeFrom')
-                                ->label('Inizio addebito dal')
-                                ->displayFormat('d/m/Y'),
-                            TextInput::make('remburse')
-                                ->label('Rimborso Spese Fisso Mensile')
-                                ->numeric()
-                                ->prefix('€')
-                                ->maxValue(99999999.99)
-                                ->columnSpan(3),
-                        ]),
-                    ]),
-                // 5. SEZIONE CAMPAGNA E BUDGET
-                Section::make('Campagna e Budget')
-                    ->collapsible()
-                    ->collapsed()
-                    ->description('Dati relativi a campagne di acquisizione e budget assegnato.')
-                    ->icon('heroicon-o-flag')
-                    ->schema([
-                        Grid::make(2)->schema([
-                            TextInput::make('welcome_bonus')
-                                ->label('Premio Benvenuto')
-                                ->numeric()
-                                ->prefix('€')
-                                ->maxValue(99999999.99)
-                                ->step(0.01)
-                                ->helperText('Bonus una tantum per nuovi agenti'),
-                            TextInput::make('budget')
-                                ->label('Budget Assegnato')
-                                ->numeric()
-                                ->prefix('€')
-                                ->maxValue(99999999.99)
-                                ->step(0.01)
-                                ->helperText("Budget annuale/mensile assegnato all'agente"),
-                            TextInput::make('campagna')
-                                ->label('Codice Campagna')
-                                ->maxLength(255)
-                                ->helperText('Codice della campagna di acquisizione'),
-                            DatePicker::make('available_at')
-                                ->label('Data Disponibilità')
-                                ->displayFormat('d/m/Y')
-                                ->helperText("Data da cui l'agente è disponibile"),
                         ]),
                     ]),
             ]);

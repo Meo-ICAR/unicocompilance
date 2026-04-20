@@ -2,8 +2,11 @@
 
 namespace App\Models\BPM;
 
-use App\Enums\EmployeeType;
-use App\Enums\SupervisorType;
+// use App\Enums\EmployeeType;
+// use App\Enums\SupervisorType;
+use App\Models\COMPILANCE\CompanyBranch;
+use App\Models\COMPILANCE\TrainingSession;
+use App\Models\PROFORMA\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -65,15 +68,26 @@ class Employee extends Model
         'termination_date' => 'date',
         'is_structure' => 'boolean',
         'is_ghost' => 'boolean',
-        'cf' => 'encrypted',
-        'email' => 'encrypted',
-        'pec' => 'encrypted',
-        'phone' => 'encrypted',
+        // Temporarily remove encryption until we fix column sizes
+        // 'cf' => 'encrypted',
+        // 'email' => 'encrypted',
+        // 'pec' => 'encrypted',
+        // 'phone' => 'encrypted',
     ];
 
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function trainingSessions(): MorphMany
+    {
+        return $this->morphMany(TrainingSession::class, 'trainee');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     }
 
     // Assumendo che Employee sia collegato all'utente di login

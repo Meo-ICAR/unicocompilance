@@ -4,14 +4,10 @@ namespace App\Filament\Resources\Clientis;
 
 use App\Filament\RelationManagers\DocumentsRelationManager;
 use App\Filament\RelationManagers\WebsitesRelationManager;
-use App\Filament\Resources\Clientis\Imports\ClientisImport;
 use App\Filament\Resources\Clientis\Pages\CreateClienti;
 use App\Filament\Resources\Clientis\Pages\EditClienti;
 use App\Filament\Resources\Clientis\Pages\ListClientis;
 use App\Filament\Resources\Clientis\Pages\ListClientiScopes;
-use App\Filament\Resources\Clientis\RelationManagers\ClientiMandatesRelationManager;
-use App\Filament\Resources\Clientis\RelationManagers\ClientiScopesRelationManager;
-use App\Filament\Resources\Clientis\RelationManagers\ContactsRelationManager;
 use App\Filament\Resources\Clientis\RelationManagers\EmployeesRelationManager;
 use App\Filament\Resources\Clientis\Schemas\ClientiForm;
 use App\Filament\Resources\Clientis\Tables\ClientisTable;
@@ -55,13 +51,9 @@ class ClientiResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ContactsRelationManager::class,
-            ClientiMandatesRelationManager::class,
-            ClientiScopesRelationManager::class,
             DocumentsRelationManager::class,
             WebsitesRelationManager::class,
             EmployeesRelationManager::class,
-            SalesInvoicesRelationManager::class,
         ];
     }
 

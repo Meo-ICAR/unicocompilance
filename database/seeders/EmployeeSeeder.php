@@ -1,0 +1,363 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\BPM\Employee;
+use App\Models\PROFORMA\Company;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+class EmployeeSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        // Disable foreign key checks temporarily
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        // Clear existing data
+        Employee::query()->delete();
+
+        // Re-enable foreign key checks
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        // Get the first company from mysql_proforma database and copy it to bpm database if needed
+        $proformaCompany = DB::connection('mysql_proforma')->table('companies')->first();
+
+        if (!$proformaCompany) {
+            $this->command->warn('No companies found in mysql_proforma database.');
+            return;
+        }
+
+        // Check if this company exists in bpm database
+        $bpmCompany = DB::connection('bpm')->table('companies')->where('id', $proformaCompany->id)->first();
+
+        if (!$bpmCompany) {
+            // Copy the company from proforma to bpm database
+            DB::connection('bpm')->table('companies')->insert([
+                'id' => $proformaCompany->id,
+                'name' => $proformaCompany->name,
+                'vat_number' => $proformaCompany->piva,  // Map piva to vat_number
+                'created_at' => $proformaCompany->created_at ?? now(),
+                'updated_at' => $proformaCompany->updated_at ?? now(),
+            ]);
+            $this->command->info('Company copied from mysql_proforma to bpm database.');
+        }
+
+        $companyId = $proformaCompany->id;
+
+        // Employee data from SQL, replacing company_id with the first company's ID
+        $employeeId = 1;
+        $employees = [
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'DOGLIONI  DONATELLA',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'donatella.doglioni@races.it',
+                'pec' => null,
+                'phone' => '340 9395636',
+                'department' => null,
+                'oam' => null,
+                'oam_at' => null,
+                'oam_name' => null,
+                'numero_iscrizione_rui' => '0',
+                'ivass' => null,
+                'hiring_date' => '2026-03-19',
+                'termination_date' => null,
+                'company_branch_id' => 1,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:44',
+                'updated_at' => '2026-03-22 13:28:02',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'SAJEVA PAOLO',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'paolo.sajeva@races.it',
+                'pec' => '',
+                'phone' => '348 3860075',
+                'department' => null,
+                'oam' => null,
+                'oam_at' => null,
+                'oam_name' => null,
+                'numero_iscrizione_rui' => null,
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 13:07:22',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'VALENTE LUCA',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'luca.valente@races.it',
+                'pec' => '',
+                'phone' => '340 688 7573',
+                'department' => null,
+                'oam' => '2019-05-28',
+                'oam_at' => '2019-05-28',
+                'oam_name' => 'VALENTE LUCA',
+                'numero_iscrizione_rui' => 'E000629852',
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 12:07:36',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'MAGLIANO  ANGELA',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'angela.magliano@races.it',
+                'pec' => '',
+                'phone' => '349 0507635',
+                'department' => null,
+                'oam' => null,
+                'oam_at' => null,
+                'oam_name' => null,
+                'numero_iscrizione_rui' => null,
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 13:07:22',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'BASTIONE DAVIDE',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'davide.bastione@races.it',
+                'pec' => '',
+                'phone' => '06 86768121',
+                'department' => null,
+                'oam' => null,
+                'oam_at' => null,
+                'oam_name' => null,
+                'numero_iscrizione_rui' => null,
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 13:07:22',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'LONGO MICHELE',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'michele.longo@races.it',
+                'pec' => '',
+                'phone' => '3283025796',
+                'department' => null,
+                'oam' => '2007-02-01',
+                'oam_at' => '2007-02-01',
+                'oam_name' => 'LONGO MICHELE',
+                'numero_iscrizione_rui' => 'E000039926',
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 12:07:36',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'MALPELI GERTRUDE',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'gertrude.malpeli@races.it',
+                'pec' => '',
+                'phone' => '06 99317742 ',
+                'department' => null,
+                'oam' => '2023-03-21',
+                'oam_at' => '2023-03-21',
+                'oam_name' => 'MALPELI GERTRUDE',
+                'numero_iscrizione_rui' => 'E000726797',
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 12:07:36',
+            ],
+            [
+                'id' => $employeeId++,
+                'company_id' => $companyId,
+                'user_id' => null,
+                'name' => 'ZACCARIA  LOREDANA',
+                'role_title' => null,
+                'cf' => null,
+                'email' => 'loredana.zaccaria@races.it',
+                'pec' => '',
+                'phone' => '339 6781274',
+                'department' => null,
+                'oam' => null,
+                'oam_at' => null,
+                'oam_name' => null,
+                'numero_iscrizione_rui' => null,
+                'ivass' => null,
+                'hiring_date' => null,
+                'termination_date' => null,
+                'company_branch_id' => null,
+                'coordinated_by_id' => null,
+                'employee_types' => 'dipendente',
+                'supervisor_type' => 'no',
+                'privacy_role' => null,
+                'purpose' => null,
+                'data_subjects' => null,
+                'data_categories' => null,
+                'retention_period' => null,
+                'extra_eu_transfer' => null,
+                'security_measures' => null,
+                'privacy_data' => null,
+                'is_structure' => 0,
+                'is_ghost' => 0,
+                'oam_dismissed_at' => null,
+                'created_at' => '2026-03-20 12:41:45',
+                'updated_at' => '2026-03-22 13:07:22',
+            ],
+        ];
+
+        // Insert employees one by one to handle encryption properly
+        $createdCount = 0;
+        foreach ($employees as $employeeData) {
+            try {
+                Employee::create($employeeData);
+                $createdCount++;
+            } catch (\Exception $e) {
+                $this->command->error("Failed to create employee {$employeeData['name']}: " . $e->getMessage());
+            }
+        }
+
+        if ($createdCount > 0) {
+            $this->command->info('Employees seeded successfully!');
+            $this->command->info('Total employees created: ' . $createdCount);
+            $this->command->info('Using company ID: ' . $companyId);
+        }
+    }
+}

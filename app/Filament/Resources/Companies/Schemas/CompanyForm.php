@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Companies\Schemas;
 
+use App\Enums\CompanyType;
 use App\Filament\RelationManagers\DocumentsRelationManager;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -60,26 +61,28 @@ class CompanyForm
                             TextInput::make('oam'),
                             DatePicker::make('oam_at'),
                             TextInput::make('oam_name'),
-                            Select::make('company_type_id')
-                                ->relationship('companyType', 'name')
+                            Select::make('company_type')
+                                ->label('Tipo Azienda')
+                                ->options(CompanyType::getAll())
                                 ->searchable()
-                                ->preload()
                                 ->nullable(),
                         ]),
                     Section::make('Brand e Documentazione')
                         ->description('Logo aziendale e intestazione carta intestata')
                         ->collapsed()
                         ->schema([
-                            SpatieMediaLibraryFileUpload::make('logo')
-                                ->label('Logo Azienda')
-                                ->image()
-                                ->imageEditor()
-                                ->directory('companies/logos')
-                                ->visibility('public')
-                                ->collection('logo')
-                                ->maxSize(2048)
-                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml', 'image/webp'])
-                                ->helperText("Carica il logo dell'azienda (max 2MB, formati: JPG, PNG, SVG, WebP)"),
+                            /*
+                             * SpatieMediaLibraryFileUpload::make('logo')
+                             *     ->label('Logo Azienda')
+                             *     ->image()
+                             *     ->imageEditor()
+                             *     ->directory('companies/logos')
+                             *     ->visibility('public')
+                             *     ->collection('logo')
+                             *     ->maxSize(2048)
+                             *     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/svg+xml', 'image/webp'])
+                             *     ->helperText("Carica il logo dell'azienda (max 2MB, formati: JPG, PNG, SVG, WebP)"),
+                             */
                             RichEditor::make('page_header')
                                 ->label('Intestazione Carta Intestata')
                                 ->helperText("Testo che apparirà nell'intestazione dei documenti ufficiali")

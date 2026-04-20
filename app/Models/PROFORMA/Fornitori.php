@@ -2,12 +2,20 @@
 
 namespace App\Models\PROFORMA;
 
-use App\Models\CompanyBranch;
+use App\Models\COMPILANCE\CompanyBranch;
+use App\Models\COMPILANCE\TrainingSession;
+use App\Models\COMPILANCE\Website;
+use App\Models\DOC\Document;
+use App\Models\PROFORMA\Address;
+use App\Models\PROFORMA\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 // use Wildside\Userstamps\HasUserstamps;
 
 class Fornitori extends Model
@@ -157,12 +165,32 @@ class Fornitori extends Model
     // Relationships
     public function company(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\PROFORMA\Company::class, 'company_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function companyBranch(): BelongsTo
     {
         return $this->belongsTo(CompanyBranch::class, 'company_branch_id');
+    }
+
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function websites()
+    {
+        return $this->morphMany(Website::class, 'websiteable');
+    }
+
+    public function trainingSessions(): MorphMany
+    {
+        return $this->morphMany(TrainingSession::class, 'trainee');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     }
 
     public function user(): BelongsTo

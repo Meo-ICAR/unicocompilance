@@ -61,18 +61,11 @@ class ClientiForm
                                     'Utility' => 'Utility',
                                 ])
                                 ->searchable(),
-                            Select::make('principal_type')
-                                ->label('Tipo Mandante')
-                                ->options([
-                                    'no' => 'Non Specificato',
-                                    'banca' => 'Banca',
-                                    'assicurazione' => 'Compagnia Assicurativa',
-                                    'agente' => 'Agente',
-                                    'agente_captive' => 'Agente Captive',
-                                ])
-                                ->default('no')
-                                ->searchable()
-                                ->helperText('Tipologia del mandante per classificazione interna'),
+                            Toggle::make('is_active')
+                                ->label('Convenzione Attiva')
+                                ->default(true)
+                                ->inline(false)
+                                ->helperText('Disattiva per nascondere questo istituto dalle nuove pratiche.'),
                             Select::make('submission_type')
                                 ->label('Modalita Inoltro')
                                 ->options([
@@ -85,26 +78,11 @@ class ClientiForm
                                 ->helperText('Tipologia del mandante per classificazione interna'),
                         ]),
                         Grid::make(2)->schema([
-                            TextInput::make('website')
-                                ->label('Sito Web')
-                                ->url()
-                                ->prefix('https://')
-                                ->maxLength(255),
-                            TextInput::make('portalsite')
-                                ->label('Portale Accesso')
-                                ->url()
-                                ->prefix('https://')
-                                ->maxLength(255),
-                            Toggle::make('is_active')
-                                ->label('Convenzione Attiva')
-                                ->default(true)
-                                ->inline(false)
-                                ->helperText('Disattiva per nascondere questo istituto dalle nuove pratiche.'),
                             Toggle::make('is_dummy')
-                                ->label('Istituto Fittizio (Non Convenzionato)')
+                                ->label('Istituto Fittizio')
                                 ->default(false)
                                 ->inline(false)
-                                ->helperText('Usa per censire banche concorrenti o per estinzioni debiti terzi.'),
+                                ->helperText('Usa per censire banche concorrenti o ai fini istruttoria'),
                         ]),
                     ]),
                 // 2. SEZIONE DATI FISCALI E REGOLAMENTARI (OAM/IVASS)
@@ -123,9 +101,6 @@ class ClientiForm
                                 ->label('Codice ABI / ISVASS')
                                 ->maxLength(5)
                                 ->helperText('5 cifre per le banche.'),
-                            TextInput::make('contoCOGE')
-                                ->label('Conto COGE (Contabilità)')
-                                ->maxLength(255),
                             TextInput::make('oam')
                                 ->label('Codice Iscrizione OAM')
                                 ->maxLength(30),

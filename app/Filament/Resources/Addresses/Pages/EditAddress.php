@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Employees\Pages;
+namespace App\Filament\Resources\Addresses\Pages;
 
-use App\Filament\Resources\Employees\EmployeeResource;
+use App\Filament\Resources\Addresses\AddressResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditEmployee extends EditRecord
+class EditAddress extends EditRecord
 {
-    protected static string $resource = EmployeeResource::class;
+    protected static string $resource = AddressResource::class;
 
     protected function getHeaderActions(): array
     {

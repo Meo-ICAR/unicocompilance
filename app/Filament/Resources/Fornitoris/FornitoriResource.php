@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Fornitoris;
 
+use App\Filament\RelationManagers\ChecklistsRelationManager;
 use App\Filament\RelationManagers\DocumentsRelationManager;
+use App\Filament\RelationManagers\TrainingSessionsRelationManager;
 use App\Filament\RelationManagers\WebsitesRelationManager;
 use App\Filament\Resources\Fornitoris\Pages\CreateFornitori;
 use App\Filament\Resources\Fornitoris\Pages\EditFornitori;
 use App\Filament\Resources\Fornitoris\Pages\ListFornitoris;
-use App\Filament\Resources\Fornitoris\RelationManagers\ChecklistsRelationManager;
-use App\Filament\Resources\Fornitoris\RelationManagers\TrainingRecordsRelationManager;
 use App\Filament\Resources\Fornitoris\Schemas\FornitoriForm;
 use App\Filament\Resources\Fornitoris\Tables\FornitorisTable;
 use App\Models\PROFORMA\Fornitori;
@@ -48,9 +48,7 @@ class FornitoriResource extends Resource
         return [
             DocumentsRelationManager::class,
             WebsitesRelationManager::class,
-            ChecklistsRelationManager::class,
-            TrainingRecordsRelationManager::class,
-            PurchaseInvoicesRelationManager::class,
+            TrainingSessionsRelationManager::class,
         ];
     }
 

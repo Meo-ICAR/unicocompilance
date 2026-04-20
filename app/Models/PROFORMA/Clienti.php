@@ -2,9 +2,14 @@
 
 namespace App\Models\PROFORMA;
 
+use App\Models\COMPILANCE\ClientiEmployee;
 use App\Models\COMPILANCE\ClientType;
+use App\Models\COMPILANCE\Website;
+use App\Models\DOC\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // use Wildside\Userstamps\HasUserstamps;
@@ -130,6 +135,26 @@ class Clienti extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function websites()
+    {
+        return $this->morphMany(Website::class, 'websiteable');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(ClientiEmployee::class);
     }
 
     public function clientType(): BelongsTo

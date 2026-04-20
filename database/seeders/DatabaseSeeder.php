@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
             OamScopeSeeder::class,
             ClientTypeSeeder::class,
             SoftwareCategorySeeder::class,
+            CompanyBranchSeeder::class,
+            EmployeeSeeder::class,
+            ClientiSeeder::class,
+            ClientiEmployeeSeeder::class,
         ]);
     }
 }

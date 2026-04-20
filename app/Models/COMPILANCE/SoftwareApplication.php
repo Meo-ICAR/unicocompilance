@@ -12,14 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 class SoftwareApplication extends Model
 {
     use HasFactory;
-     protected $connection = 'mysql_compliance';
+
+    protected $connection = 'mysql_compliance';
 
     protected $fillable = [
         'name',
         'provider_name',
         'software_category_id',
         'website_url',
-        'company_id'
+        'company_id',
         'api_url',
         'sandbox_url',
         'api_key_url',
@@ -39,16 +40,13 @@ class SoftwareApplication extends Model
         return $this->hasMany(ApiConfiguration::class);
     }
 
-   public function company(): BelongsTo
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
-
 
     public function softwareCategory(): BelongsTo
     {
         return $this->belongsTo(SoftwareCategory::class, 'software_category_id');
     }
-
-
 }

@@ -4,20 +4,21 @@ namespace App\Models\DOC;
 
 use App\Enums\DocumentStatus;
 use App\Enums\SyncStatus;
+use App\Models\DOC\DocumentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+// use Spatie\MediaLibrary\HasMedia;
+// use Spatie\MediaLibrary\InteractsWithMedia;
 // use Wildside\Userstamps\HasUserstamps;
 // use Mattiverse\Userstamps\Traits\Userstamps;
 
-class Document extends Model implements HasMedia
+class Document extends Model  // implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes;  // , InteractsWithMedia;
 
     protected $connection = 'doc';
 

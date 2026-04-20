@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\Employees\Pages;
+namespace App\Filament\Resources\Addresses\Pages;
 
-use App\Filament\Resources\Employees\EmployeeResource;
+use App\Filament\Resources\Addresses\AddressResource;
 // use App\Filament\Traits\HasRegolamentoAction;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListEmployees extends ListRecords
+class ListAddresses extends ListRecords
 {
     // use HasRegolamentoAction;
 
-    protected static string $resource = EmployeeResource::class;
+    protected static string $resource = AddressResource::class;
 
     protected function getHeaderActions(): array
     {
