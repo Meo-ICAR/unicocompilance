@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\PracticeOams\Pages;
 
 use App\Filament\Resources\PracticeOams\PracticeOamResource;
-use App\Filament\Traits\HasRegolamentoAction;
+// use App\Filament\Traits\HasRegolamentoAction;
 use App\Services\PracticeOamService;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ListPracticeOams extends ListRecords
 {
-    use HasRegolamentoAction;
+    // use HasRegolamentoAction;
 
     protected static string $resource = PracticeOamResource::class;
 

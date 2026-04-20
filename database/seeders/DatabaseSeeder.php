@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             ConflictOfInterestSeeder::class,
             OamCodeSeeder::class,
             OamScopeSeeder::class,
+            ClientTypeSeeder::class,
+            SoftwareCategorySeeder::class,
         ]);
     }
 }

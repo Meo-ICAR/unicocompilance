@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\PracticeOams\Tables;
 
 use App\Exports\PracticeOamBaseExport;
-use App\Filament\Exports\PracticeOamAnaliticoExporter;
-use App\Filament\Exports\PracticeOamExporter;
-use App\Filament\Traits\CanExportTable;
-use App\Filament\Traits\HasChecklistAction;  // 1. Importa il namespace
+// use App\Filament\Exports\PracticeOamAnaliticoExporter;
+// use App\Filament\Exports\PracticeOamExporter;
+// use App\Filament\Traits\CanExportTable;
+// use App\Filament\Traits\HasChecklistAction;  // 1. Importa il namespace
 use App\Models\PracticeOam;
 use App\Models\PracticeOamBase;
 use Filament\Actions\Action;
@@ -42,7 +42,7 @@ use Maatwebsite\Excel\Facades\Excel;  // USA LA FACADE!
 
 class PracticeOamsTable
 {
-    use CanExportTable;
+    //  use CanExportTable;
 
     public static function configure(Table $table): Table
     {

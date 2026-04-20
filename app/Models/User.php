@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use App\Models\SocialiteUser;
 use Database\Factories\UserFactory;
 use Filament\Facades\Filament;
