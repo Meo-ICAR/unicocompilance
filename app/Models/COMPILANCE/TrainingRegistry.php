@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TrainingRegistry extends Model
 {
+    protected $connection = 'mysql_compliance';
     protected $table = 'training_registry';
 
     protected $fillable = [

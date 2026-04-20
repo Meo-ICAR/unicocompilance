@@ -18,7 +18,7 @@ class ListFornitoris extends ListRecords
     {
         return [
             CreateAction::make(),
-            $this->getRegolamentoAction(),
+            // $this->getRegolamentoAction(),
         ];
     }
 }

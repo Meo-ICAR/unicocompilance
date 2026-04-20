@@ -12,6 +12,8 @@ class ComplaintRegistry extends Model
 {
     use SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_compliance';
+
     protected $table = 'complaint_registry';
 
     protected $fillable = [

@@ -2,7 +2,7 @@
 
 namespace Database\Factories\BPM;
 
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

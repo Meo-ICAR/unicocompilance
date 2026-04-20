@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyBranch extends Model
 {
     // use HasFactory;
-    protected $connection = 'bpm';
+    protected $connection = 'mysql_compliance';
 
     protected $fillable = [
         'company_id',

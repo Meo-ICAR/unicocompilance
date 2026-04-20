@@ -24,6 +24,10 @@ class Fornitori extends Model
 
     public $incrementing = false;
 
+    protected $orderBy = 'name';
+
+    protected $orderDirection = 'asc';
+
     protected $fillable = [
         'pec',
         'description',
@@ -153,7 +157,7 @@ class Fornitori extends Model
     // Relationships
     public function company(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\BPM\Company::class, 'company_id');
+        return $this->belongsTo(\App\Models\PROFORMA\Company::class, 'company_id');
     }
 
     public function companyBranch(): BelongsTo

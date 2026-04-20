@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Clientis\Tables;
 
 // use App\Filament\Traits\CanExportTable;
 // use App\Filament\Traits\HasChecklistAction;  // 1. Importa il namespace
-use App\Models\PROFORMA\Clienti;  // Assicurati che il modello Clienti esista
-// use App\Models\Abi;  // Assicurati che il modello Abi esista
+use App\Models\DB\Abi;  // Assicurati che il modello Abi esista
 // use App\Services\ChecklistService;
+use App\Models\PROFORMA\Clienti;  // Assicurati che il modello Clienti esista
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -61,7 +61,7 @@ class ClientisTable
                     ->label('Numero Iscrizione OAM')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('principal_type')
+                TextColumn::make('clienti_type')
                     ->label('Tipo Mandante')
                     ->formatStateUsing(fn($state) => match ($state) {
                         'no' => 'Non Specificato',
@@ -117,7 +117,7 @@ class ClientisTable
             ->filters([
                 Filter::make('senza_abi')
                     ->label('Senza ABI')
-                    ->query(fn(Builder $query): Builder => $query->whereNull('principals.abi'))
+                    ->query(fn(Builder $query): Builder => $query->whereNull('abi'))
                     ->indicator('ABI Mancante'),  // Mostra un badge sopra la tabella quando è attivo
                 Filter::make('con_segnalazione')
                     ->label('Con Accordi di Segnalazione')
@@ -129,44 +129,50 @@ class ClientisTable
             ])
             ->recordActions([
                 // EditAction::make(),
-                ...self::getChecklistActions(
-                    code: 'BANK_AUDIT',  // <-- Il 'code' esatto presente nel tuo DB
-                    label: 'Audit',
-                    // icon: 'heroicon-o-clipboard-document-check'
-                ),
+
+                /*
+                 * ...self::getChecklistActions(
+                 *     code: 'BANK_AUDIT',  // <-- Il 'code' esatto presente nel tuo DB
+                 *     label: 'Audit',
+                 *     // icon: 'heroicon-o-clipboard-document-check'
+                 * ),
+                 */
             ], position: RecordActionsPosition::BeforeColumns)
             ->toolbarActions([
                 BulkActionGroup::make([
                     //    DeleteBulkAction::make(),
-                    BulkAction::make('assegnaAbi')
-                        ->label('Assegna ABI ai Mandanti')
-                        ->icon('heroicon-o-banknotes')
-                        ->color('warning')
-                        // Definiamo il form che appare nel modal dopo il click
-                        ->form([
-                            Select::make('abi')
-                                ->label('Seleziona ABI')
-                                ->options(Abi::query()->pluck('name', 'abi'))  // Sostituisci nome_banca col tuo campo
-                                ->searchable()
-                                ->required(),
-                        ])
-                        // Logica di esecuzione sui record selezionati
-                        ->action(function (Collection $records, array $data): void {
-                            $abiId = $data['abi'];
 
-                            // Recuperiamo gli ID univoci dei Principal dai record selezionati
-                            // (Necessario perché la query raggruppata potrebbe avere duplicati di ID per diversi prodotti)
-                            $principalIds = $records->pluck('id')->unique();
-
-                            // Aggiornamento massivo sul database
-                            Principal::whereIn('id', $principalIds)
-                                ->update(['abi' => $abiId]);
-                        })
-                        ->deselectRecordsAfterCompletion()  // Pulisce la selezione a fine operazione
-                        ->requiresConfirmation()
-                        ->modalHeading('Assegnazione Massiva ABI')
-                        ->modalDescription("Seleziona l'istituto da associare a tutti i mandanti selezionati.")
-                        ->modalSubmitActionLabel('Conferma Assegnazione'),
+                    /*
+                     * BulkAction::make('assegnaAbi')
+                     *     ->label('Assegna ABI ai Mandanti')
+                     *     ->icon('heroicon-o-banknotes')
+                     *     ->color('warning')
+                     *     // Definiamo il form che appare nel modal dopo il click
+                     *     ->form([
+                     *         Select::make('abi')
+                     *             ->label('Seleziona ABI')
+                     *             ->options(Abi::query()->pluck('name', 'abi'))  // Sostituisci nome_banca col tuo campo
+                     *             ->searchable()
+                     *             ->required(),
+                     *     ])
+                     *     // Logica di esecuzione sui record selezionati
+                     *     ->action(function (Collection $records, array $data): void {
+                     *         $abiId = $data['abi'];
+                     *
+                     *         // Recuperiamo gli ID univoci dei clienti dai record selezionati
+                     *         // (Necessario perché la query raggruppata potrebbe avere duplicati di ID per diversi prodotti)
+                     *         $clientiIds = $records->pluck('id')->unique();
+                     *
+                     *         // Aggiornamento massivo sul database
+                     *         clienti::whereIn('id', $clientiIds)
+                     *             ->update(['abi' => $abiId]);
+                     *     })
+                     *     ->deselectRecordsAfterCompletion()  // Pulisce la selezione a fine operazione
+                     *     ->requiresConfirmation()
+                     *     ->modalHeading('Assegnazione Massiva ABI')
+                     *     ->modalDescription("Seleziona l'istituto da associare a tutti i mandanti selezionati.")
+                     *     ->modalSubmitActionLabel('Conferma Assegnazione'),
+                     */
                 ]),
             ]);
     }

@@ -13,10 +13,13 @@ class Clienti extends Model
 {
     use HasFactory, SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_proforma';
     protected $table = 'clientis';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $orderBy = 'name';
+    protected $orderDirection = 'asc';
 
     protected $fillable = [
         'abi',

@@ -13,6 +13,8 @@ class Complaint extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $connection = 'mysql_compliance';
+
     protected $table = 'complaints';
 
     protected $fillable = [

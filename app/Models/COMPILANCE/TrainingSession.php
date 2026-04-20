@@ -13,6 +13,8 @@ class TrainingSession extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'mysql_compliance';
+
     protected $fillable = [
         'course_name',
         'hours',

@@ -2,10 +2,10 @@
 
 namespace App\Models\OAM;
 
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 class PracticeOam extends Model
 {

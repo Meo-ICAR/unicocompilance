@@ -8,6 +8,10 @@ class Pratica extends Model
 {
     protected $connection = 'mysql_proforma';
 
+    protected $orderBy = 'cognome_cliente';
+
+    protected $orderDirection = 'asc';
+
     /**
      * The table associated with the model.
      *

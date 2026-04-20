@@ -10,6 +10,8 @@ class SoftwareCategory extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql_compliance';
+
     protected $fillable = [
         'name',
         'code',

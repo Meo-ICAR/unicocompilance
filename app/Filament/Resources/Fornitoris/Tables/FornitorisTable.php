@@ -203,49 +203,15 @@ class FornitorisTable
                     }),
             ])
             ->recordActions([
-                ...self::getChecklistActions(
-                    code: 'AUDIT_RETE_AGENTI',  // <-- Il 'code' esatto presente nel tuo DB
-                    label: 'Audit',
-                    // icon: 'heroicon-o-clipboard-document-check'
-                ),
+                /*
+                 * ...self::getChecklistActions(
+                 *     code: 'AUDIT_RETE_AGENTI',  // <-- Il 'code' esatto presente nel tuo DB
+                 *     label: 'Audit',
+                 *     // icon: 'heroicon-o-clipboard-document-check'
+                 * ),
+                 */
             ], position: RecordActionsPosition::BeforeColumns)
             ->headerActions([
-                Action::make('import_agents_excel')
-                    ->label('Importa Agenti Excel')
-                    ->icon('heroicon-o-document-arrow-up')
-                    ->color('success')
-                    ->form([
-                        FileUpload::make('import_file_excel')
-                            ->label('File Excel')
-                            ->helperText('Carica un file Excel con i dati degli agenti')
-                            ->acceptedFileTypes(['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])
-                            ->maxSize(10240)  // 10MB
-                            ->directory('agent-imports')
-                            ->visibility('private')
-                            ->required(),
-                    ])
-                    ->action(function (array $data) {
-                        try {
-                            $filePath = storage_path('app/private/' . $data['import_file_excel']);
-                            $companyId = Auth::user()->company_id;
-                            $filename = basename($data['import_file_excel']);
-
-                            $importService = new AgentImportService();
-                            $results = $importService->importAgents($filePath, $companyId);
-
-                            Notification::make()
-                                ->title('Importazione Agenti completata')
-                                ->body("Importazione da {$filename} completata. Importati: {$results['imported']}, Saltati: {$results['skipped']}")
-                                ->success()
-                                ->send();
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Errore importazione Agenti')
-                                ->body('Errore durante importazione: ' . $e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
-                    }),
                 Action::make('match_agents_rui')
                     ->label('Abbina Agenti a OAM')
                     ->icon('heroicon-o-link')
@@ -290,7 +256,7 @@ class FornitorisTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    static::getExportBulkAction(),  // 2. Richiama l'azione dal trait
+                    //  static::getExportBulkAction(),  // 2. Richiama l'azione dal trait
                     //   DeleteBulkAction::make(),
                 ]),
             ])

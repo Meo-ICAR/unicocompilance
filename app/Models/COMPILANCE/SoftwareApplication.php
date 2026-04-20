@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class SoftwareApplication extends Model
 {
     use HasFactory;
+     protected $connection = 'mysql_compliance';
 
     protected $fillable = [
         'name',

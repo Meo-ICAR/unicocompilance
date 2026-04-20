@@ -25,13 +25,13 @@ class FornitoriResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedIdentification;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Organizzazione';
+    protected static string|UnitEnum|null $navigationGroup = 'Anagrafiche';
 
-    protected static ?string $navigationLabel = 'Fornitori';
+    protected static ?string $navigationLabel = 'Agenti';
 
-    protected static ?string $modelLabel = 'Fornitore';
+    protected static ?string $modelLabel = 'Agente';
 
-    protected static ?string $pluralModelLabel = 'Fornitori';
+    protected static ?string $pluralModelLabel = 'Agenti';
 
     public static function form(Schema $schema): Schema
     {

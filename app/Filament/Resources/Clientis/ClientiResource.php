@@ -34,13 +34,13 @@ class ClientiResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Organizzazione';
+    protected static string|UnitEnum|null $navigationGroup = 'Anagrafiche';
 
-    protected static ?string $navigationLabel = 'Clienti';
+    protected static ?string $navigationLabel = 'Istituti';
 
-    protected static ?string $modelLabel = 'Cliente';
+    protected static ?string $modelLabel = 'Istituto';
 
-    protected static ?string $pluralModelLabel = 'Clienti';
+    protected static ?string $pluralModelLabel = 'Istituti';
 
     public static function form(Schema $schema): Schema
     {

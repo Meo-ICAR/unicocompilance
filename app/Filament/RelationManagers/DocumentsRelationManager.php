@@ -4,7 +4,7 @@ namespace App\Filament\RelationManagers;
 
 use App\Filament\Actions\BulkClassifyDocumentsAction;
 use App\Filament\Actions\ClassifyDocumentAction;
-use App\Models\Company;
+use App\Models\PROFORMA\Company;
 use App\Models\Document;
 use App\Models\DocumentType;
 use App\Models\Principal;
@@ -158,7 +158,7 @@ class DocumentsRelationManager extends RelationManager
 
                         // Use existing logic for all owner types including Company
                         $types = DocumentType::query()
-                            ->when($ownerClass === 'App\Models\Company', function ($query) {
+                            ->when($ownerClass === 'App\Models\PROFORMA\Company', function ($query) {
                                 return $query->forCompanies();
                             })
                             ->when($ownerClass === 'App\Models\Agent', function ($query) {
@@ -316,9 +316,9 @@ class DocumentsRelationManager extends RelationManager
 
                             // Get unclassified documents for this company
                             $documents = Document::whereNull('document_type_id')
-                                ->whereHasMorph('documentable', ['App\Models\Company', 'App\Models\Agent', 'App\Models\Principal',
+                                ->whereHasMorph('documentable', ['App\Models\PROFORMA\Company', 'App\Models\Agent', 'App\Models\Principal',
                                         'App\Models\Client', 'App\Models\Practice'], function ($query) use ($companyId) {
-                                    if ($query->getModel() instanceof \App\Models\Company) {
+                                    if ($query->getModel() instanceof \App\Models\PROFORMA\Company) {
                                         $query->where('id', $companyId);
                                     } else {
                                         $query->where('company_id', $companyId);

@@ -12,7 +12,8 @@
 namespace App\Models\COMPILANCE;
 
 use App\Enums\AmlReportStatus;
-use App\Models\External\BPM\Agent;
+use App\Models\PROFORMA\Company;
+use App\Models\PROFORMA\Fornitori;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,9 +52,9 @@ class AmlSosReport extends Model
     }
 
     // Relazione logica cross-database
-    public function agent(): BelongsTo
+    public function fornitore(): BelongsTo
     {
-        return $this->belongsTo(Agent::class, 'agent_id', 'id');
+        return $this->belongsTo(Fornitori::class, 'fornitore_id', 'id');
     }
 
     public function company(): BelongsTo

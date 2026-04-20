@@ -12,6 +12,8 @@ class GdprDsrRequest extends Model
 {
     use SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_compliance';
+
     protected $fillable = [
         'company_id',
         'request_type',

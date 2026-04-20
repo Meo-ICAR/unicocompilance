@@ -2,7 +2,7 @@
 
 namespace App\Models\PROFORMA;
 
-use App\Models\CompanyBranch;
+use App\Models\COMPILANCE\CompanyBranch;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -93,6 +93,7 @@ class Company extends Model implements HasAvatar, HasMedia, HasName
     public function getFilamentAvatarUrl(): ?string
     {
         // Utile per restituire un logo da Spatie Media Library come avatar del tenant in Filament
-        return $this->getFirstMediaUrl('logo') ?: null;
+        return null;
+        // $this->getFirstMediaUrl('logo') ?: null;
     }
 }

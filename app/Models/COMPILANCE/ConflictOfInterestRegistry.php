@@ -12,6 +12,8 @@ class ConflictOfInterestRegistry extends Model
 {
     use SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_compliance';
+
     protected $table = 'conflict_of_interest_registry';
 
     protected $fillable = [

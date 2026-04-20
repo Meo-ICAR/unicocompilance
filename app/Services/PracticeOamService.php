@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use App\Models\OamScope;
 use App\Models\Practice;
 use App\Models\PracticeCommission;

@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Clients;
 use App\Filament\Resources\Clients\Pages\CreateClient;
 use App\Filament\Resources\Clients\Pages\EditClient;
 use App\Filament\Resources\Clients\Pages\ListClients;
-use App\Models\BPM\Client;
-use App\Models\FINANCE\ClientType;
+use App\Models\COMPILANCE\ClientType;
+use App\Models\PROFORMA\Client;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
@@ -32,7 +32,7 @@ class ClientResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-identification';
 
-    protected static ?string $navigationLabel = 'Clienti';
+    protected static ?string $navigationLabel = 'Consulenti';
 
     protected static string|UnitEnum|null $navigationGroup = 'Anagrafiche';
 

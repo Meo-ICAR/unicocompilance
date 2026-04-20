@@ -14,11 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    use HasFactory, SoftDeletes;  // LogsActivity removed
+    use HasFactory;  // , SoftDeletes;  // LogsActivity removed
 
     protected $connection = 'mysql_proforma';
 
     protected $guarded = ['id'];
+
+    protected $orderBy = 'name';
+
+    protected $orderDirection = 'asc';
 
     protected $fillable = [
         'company_id',

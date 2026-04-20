@@ -3,7 +3,7 @@
 namespace App\Providers\Filament;
 
 use AlizHarb\ActivityLog\ActivityLogPlugin;
-use App\Models\Company;
+use App\Models\PROFORMA\Company;
 use App\Models\SocialiteUser;
 use App\Models\User;
 use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;

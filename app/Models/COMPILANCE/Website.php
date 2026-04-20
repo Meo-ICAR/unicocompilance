@@ -15,6 +15,8 @@ class Website extends Model
 {
     use HasFactory, SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_compliance';
+
     protected $fillable = [
         'websiteable_type',
         'websiteable_id',

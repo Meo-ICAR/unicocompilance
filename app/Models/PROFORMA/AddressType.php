@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\COMPILANCE;
+namespace App\Models\PROFORMA;
 
 use Illuminate\Database\Eloquent\Model;
 

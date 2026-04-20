@@ -39,7 +39,7 @@ class CompanyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Aziende';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Organizzazione';
+    protected static string|UnitEnum|null $navigationGroup = 'Organigramma';
 
     public static function form(Schema $schema): Schema
     {

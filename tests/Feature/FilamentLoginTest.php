@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

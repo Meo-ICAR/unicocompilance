@@ -12,6 +12,8 @@ class GdprDataBreach extends Model
 {
     use SoftDeletes;  // , HasUserstamps;
 
+    protected $connection = 'mysql_compliance';
+
     protected $fillable = [
         'company_id',
         'incident_date',
