@@ -7,7 +7,7 @@ use App\Filament\Resources\GdprDsrRequests\Pages\EditGdprDsrRequest;
 use App\Filament\Resources\GdprDsrRequests\Pages\ListGdprDsrRequests;
 use App\Filament\Resources\GdprDsrRequests\Schemas\GdprDsrRequestForm;
 use App\Filament\Resources\GdprDsrRequests\Tables\GdprDsrRequestsTable;
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\GdprDsrRequest;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

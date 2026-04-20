@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\TrainingRegistries\Tables;
 
 use App\Enums\RegulatoryFramework;
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;

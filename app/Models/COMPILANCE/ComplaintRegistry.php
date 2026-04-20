@@ -2,7 +2,7 @@
 
 namespace App\Models\COMPILANCE;
 
-use App\Models\BPM\Company;
+use App\Models\PROFORMA\Company;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

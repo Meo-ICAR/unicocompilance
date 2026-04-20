@@ -8,7 +8,7 @@ use App\Filament\Resources\ComplaintRegistries\Pages\EditComplaintRegistry;
 use App\Filament\Resources\ComplaintRegistries\Pages\ListComplaintRegistries;
 use App\Filament\Resources\ComplaintRegistries\Schemas\ComplaintRegistryForm;
 use App\Filament\Resources\ComplaintRegistries\Tables\ComplaintRegistriesTable;
-use App\Models\ComplaintRegistry;
+use App\Models\COMPILANCE\ComplaintRegistry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

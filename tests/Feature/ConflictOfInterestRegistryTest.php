@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\ConflictOfInterestRegistry;
+use App\Models\COMPILANCE\ConflictOfInterestRegistry;
 
 describe('ConflictOfInterestRegistry', function () {
-
     it('isApproved returns true when approved_by_compliance_at is not null', function () {
         // Test the method logic by checking what isApproved() does:
         // it returns !is_null($this->approved_by_compliance_at)
@@ -30,7 +29,8 @@ describe('ConflictOfInterestRegistry', function () {
 
     it('has all required fillable fields', function () {
         $fillable = (new ConflictOfInterestRegistry())->getFillable();
-        expect($fillable)->toContain('user_id')
+        expect($fillable)
+            ->toContain('user_id')
             ->toContain('conflict_description')
             ->toContain('mitigation_strategy')
             ->toContain('approved_by_compliance_at');

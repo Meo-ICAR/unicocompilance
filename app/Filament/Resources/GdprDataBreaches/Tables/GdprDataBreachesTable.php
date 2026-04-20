@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\GdprDataBreaches\Tables;
 
 use App\Enums\GdprBreachStatus;
-use App\Models\GdprDataBreach;
+use App\Models\COMPILANCE\GdprDataBreach;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;

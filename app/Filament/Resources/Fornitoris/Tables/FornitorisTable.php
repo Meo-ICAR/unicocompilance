@@ -31,7 +31,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Excel;
 
-class AgentsTable
+class FornitorisTable
 {
     // 2. Usa il Trait nella classe della Risorsa
     //  use HasChecklistAction;

@@ -38,7 +38,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class AgentForm
+class FornitoriForm
 {
     use HasDocumentTypeFiltering;
 

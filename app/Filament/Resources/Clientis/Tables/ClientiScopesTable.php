@@ -17,7 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-class PrincipalScopesTable
+class ClientiScopesTable
 {
     // use CanExportTable;
 
@@ -25,22 +25,22 @@ class PrincipalScopesTable
     {
         return $table
             ->query(
-                // Partiamo da Principal ma joiniamo Practices
-                Principal::query()
+                // Partiamo da Clienti ma joiniamo Practices
+                Clienti::query()
                     ->select([
-                        'principals.id',
-                        'principals.name',
+                        'clientis.id',
+                        'clientis.name',
                         'practices.tipo_prodotto',
-                        'principals.stipulated_at',  // Serve per il toggle
+                        'clientis.stipulated_at',  // Serve per il toggle
                         DB::raw('COUNT(*) as n_pratiche'),
                         DB::raw('MIN(practices.inserted_at) as dal'),
                         DB::raw('MAX(practices.perfected_at) as al'),
                     ])
-                    ->join('practices', 'practices.principal_id', '=', 'principals.id')
+                    ->join('practices', 'practices.principal_id', '=', 'clientis.id')
                     ->whereNotIn('practices.tipo_prodotto', ['PIGNORAMENTO'])
                     ->where('practices.tipo_prodotto', 'not like', 'Alime%')
                     ->where('practices.tipo_prodotto', '>', 'A')
-                    ->groupBy('principals.id', 'principals.name', 'practices.tipo_prodotto', 'principals.stipulated_at')
+                    ->groupBy('clientis.id', 'clientis.name', 'practices.tipo_prodotto', 'clientis.stipulated_at')
             )
             ->columns([
                 TextColumn::make('name')

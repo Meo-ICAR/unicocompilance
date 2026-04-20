@@ -1,16 +1,13 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Filament\Resources\Governance;
 
 use App\Filament\Resources\Governance\Pages\CreateTrainingSession;
 use App\Filament\Resources\Governance\Pages\EditTrainingSession;
 use App\Filament\Resources\Governance\Pages\ListTrainingSessions;
+use App\Models\COMPILANCE\TrainingSession;
 use App\Models\Agent;
 use App\Models\Employee;
-use App\Models\TrainingSession;
-use BackedEnum;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -25,13 +22,14 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Tables;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BackedEnum;
 use UnitEnum;
 
 class TrainingSessionResource extends Resource
@@ -62,10 +60,9 @@ class TrainingSessionResource extends Resource
                         ->required()
                         ->live()
                         ->columnSpanFull(),
-
                     Select::make('trainee_id')
                         ->label('Corsista')
-                        ->options(fn (callable $get) => match ($get('trainee_type')) {
+                        ->options(fn(callable $get) => match ($get('trainee_type')) {
                             Agent::class => Agent::pluck('name', 'id'),
                             Employee::class => Employee::pluck('name', 'id'),
                             default => [],
@@ -73,30 +70,25 @@ class TrainingSessionResource extends Resource
                         ->searchable()
                         ->preload()
                         ->required()
-                        ->visible(fn (callable $get) => filled($get('trainee_type'))),
-
+                        ->visible(fn(callable $get) => filled($get('trainee_type'))),
                     TextInput::make('course_name')
                         ->label('Nome Corso')
                         ->required()
                         ->maxLength(255),
-
                     TextInput::make('hours')
                         ->label('Ore')
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(999)
                         ->required(),
-
                     DatePicker::make('completion_date')
                         ->label('Data Completamento')
                         ->required()
                         ->native(false),
-
                     TextInput::make('provider')
                         ->label('Ente Erogatore')
                         ->maxLength(255)
                         ->placeholder('Es. OAM, IVASS, Associazione...'),
-
                     FileUpload::make('certificate_path')
                         ->label('Certificato')
                         ->disk('private')
@@ -106,12 +98,12 @@ class TrainingSessionResource extends Resource
                         ->downloadable()
                         ->openable()
                         ->columnSpanFull(),
-
                     Textarea::make('notes')
                         ->label('Note')
                         ->rows(4)
                         ->columnSpanFull(),
-                ])->columns(2),
+                ])
+                ->columns(2),
         ]);
     }
 
@@ -125,42 +117,37 @@ class TrainingSessionResource extends Resource
                         return $query->whereHasMorph(
                             'trainee',
                             [Agent::class, Employee::class],
-                            fn (Builder $q) => $q->where('name', 'like', "%{$search}%")
+                            fn(Builder $q) => $q->where('name', 'like', "%{$search}%")
                         );
                     })
                     ->sortable()
                     ->limit(30),
-
                 TextColumn::make('trainee_type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         Agent::class => 'Agente',
                         Employee::class => 'Dipendente',
                         default => $state,
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         Agent::class => 'info',
                         Employee::class => 'success',
                         default => 'gray',
                     }),
-
                 TextColumn::make('course_name')
                     ->label('Corso')
                     ->searchable()
                     ->limit(40),
-
                 TextColumn::make('hours')
                     ->label('Ore')
                     ->numeric()
                     ->sortable()
                     ->summarize(Sum::make()->label('Totale Ore')),
-
                 TextColumn::make('completion_date')
                     ->label('Data Completamento')
                     ->date('d/m/Y')
                     ->sortable(),
-
                 TextColumn::make('provider')
                     ->label('Ente Erogatore')
                     ->searchable()
@@ -184,9 +171,9 @@ class TrainingSessionResource extends Resource
                 ForceDeleteBulkAction::make(),
                 RestoreBulkAction::make(),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->with('trainee'))
+            ->modifyQueryUsing(fn(Builder $query) => $query->with('trainee'))
             ->striped()
-            ->recordClasses(fn (TrainingSession $record) => self::getRecordClasses($record));
+            ->recordClasses(fn(TrainingSession $record) => self::getRecordClasses($record));
     }
 
     public static function getRecordClasses(TrainingSession $record): ?string

@@ -3,13 +3,13 @@
 namespace App\Filament\Resources\Fornitoris\Pages;
 
 use App\Filament\Resources\Fornitoris\FornitoriAlternativeResource;
-use App\Filament\Traits\HasRegolamentoAction;
+// use App\Filament\Traits\HasRegolamentoAction;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListFornitorisAlternative extends ListRecords
 {
-    use HasRegolamentoAction;
+    // use HasRegolamentoAction;
 
     protected static string $resource = FornitoriAlternativeResource::class;
 

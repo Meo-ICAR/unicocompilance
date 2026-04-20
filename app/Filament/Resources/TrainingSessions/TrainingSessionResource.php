@@ -7,14 +7,14 @@ use App\Filament\Resources\TrainingSessions\Pages\EditTrainingSession;
 use App\Filament\Resources\TrainingSessions\Pages\ListTrainingSessions;
 use App\Filament\Resources\TrainingSessions\Schemas\TrainingSessionForm;
 use App\Filament\Resources\TrainingSessions\Tables\TrainingSessionsTable;
-use App\Models\TrainingSession;
-use BackedEnum;
+use App\Models\COMPILANCE\TrainingSession;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BackedEnum;
 
 class TrainingSessionResource extends Resource
 {

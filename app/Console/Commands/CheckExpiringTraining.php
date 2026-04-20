@@ -8,7 +8,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 

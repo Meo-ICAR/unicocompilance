@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\GdprDataBreach;
+use App\Models\COMPILANCE\GdprDataBreach;
 
 describe('GdprDataBreach Model', function () {
-
     it('uses soft deletes', function () {
         expect(in_array(
             \Illuminate\Database\Eloquent\SoftDeletes::class,
@@ -14,8 +13,14 @@ describe('GdprDataBreach Model', function () {
     it('has all nature of breach types defined', function () {
         $types = GdprDataBreach::NATURE_OF_BREACH_TYPES;
         expect($types)->toHaveKeys([
-            'unauthorized_access', 'data_loss', 'ransomware',
-            'phishing', 'malware', 'physical_theft', 'human_error', 'other',
+            'unauthorized_access',
+            'data_loss',
+            'ransomware',
+            'phishing',
+            'malware',
+            'physical_theft',
+            'human_error',
+            'other',
         ]);
     });
 
@@ -36,7 +41,8 @@ describe('GdprDataBreach Model', function () {
 
     it('has all required fillable fields', function () {
         $fillable = (new GdprDataBreach())->getFillable();
-        expect($fillable)->toContain('company_id')
+        expect($fillable)
+            ->toContain('company_id')
             ->toContain('incident_date')
             ->toContain('discovery_date')
             ->toContain('nature_of_breach')

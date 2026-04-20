@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Illuminate\Http\JsonResponse;
 
 class AgentComplianceApiController extends Controller

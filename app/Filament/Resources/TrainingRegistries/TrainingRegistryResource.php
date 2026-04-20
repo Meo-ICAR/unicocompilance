@@ -8,7 +8,7 @@ use App\Filament\Resources\TrainingRegistries\Pages\EditTrainingRegistry;
 use App\Filament\Resources\TrainingRegistries\Pages\ListTrainingRegistries;
 use App\Filament\Resources\TrainingRegistries\Schemas\TrainingRegistryForm;
 use App\Filament\Resources\TrainingRegistries\Tables\TrainingRegistriesTable;
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

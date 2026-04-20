@@ -8,7 +8,7 @@ use App\Filament\Resources\GdprDataBreaches\Pages\EditGdprDataBreach;
 use App\Filament\Resources\GdprDataBreaches\Pages\ListGdprDataBreaches;
 use App\Filament\Resources\GdprDataBreaches\Schemas\GdprDataBreachForm;
 use App\Filament\Resources\GdprDataBreaches\Tables\GdprDataBreachesTable;
-use App\Models\GdprDataBreach;
+use App\Models\COMPILANCE\GdprDataBreach;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

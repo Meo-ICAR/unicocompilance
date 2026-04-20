@@ -18,6 +18,6 @@ class SoftwareCategory extends Model
 
     public function softwareApplications(): HasMany
     {
-        return $this->hasMany(SoftwareApplication::class, 'category_id');
+        return $this->hasMany(SoftwareApplication::class, 'software_category_id');
     }
 }

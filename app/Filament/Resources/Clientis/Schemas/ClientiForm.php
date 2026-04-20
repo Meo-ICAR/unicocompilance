@@ -34,7 +34,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class PrincipalForm
+class ClientiForm
 {
     public static function configure(Schema $schema): Schema
     {

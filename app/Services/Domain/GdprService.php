@@ -8,7 +8,7 @@
 
 namespace App\Services\Domain;
 
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\GdprDsrRequest;
 use Carbon\Carbon;
 
 readonly class GdprService

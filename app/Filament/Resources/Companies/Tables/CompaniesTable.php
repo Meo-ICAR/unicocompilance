@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 
 class CompaniesTable
 {
-    use CanExportTable;
+    //  use CanExportTable;
 
     public static function configure(Table $table): Table
     {

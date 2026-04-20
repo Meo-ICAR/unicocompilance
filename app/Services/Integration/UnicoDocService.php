@@ -3,7 +3,7 @@
 namespace App\Services\Integration;
 
 use App\Enums\AmlReportStatus;
-use App\Models\AmlSosReport;
+use App\Models\COMPILANCE\AmlSosReport;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 

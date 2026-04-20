@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\CompanyBranches\Tables;
 
-use App\Filament\Traits\CanExportTable;
+// use App\Filament\Traits\CanExportTable;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Excel;
 
 class CompanyBranchesTable
 {
-    use CanExportTable;
+    // use CanExportTable;
 
     public static function configure(Table $table): Table
     {

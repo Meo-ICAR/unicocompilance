@@ -7,14 +7,14 @@ use App\Filament\Resources\Complaints\Pages\EditComplaint;
 use App\Filament\Resources\Complaints\Pages\ListComplaints;
 use App\Filament\Resources\Complaints\Schemas\ComplaintForm;
 use App\Filament\Resources\Complaints\Tables\ComplaintsTable;
-use App\Models\Complaint;
-use BackedEnum;
+use App\Models\COMPILANCE\Complaint;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BackedEnum;
 
 class ComplaintResource extends Resource
 {

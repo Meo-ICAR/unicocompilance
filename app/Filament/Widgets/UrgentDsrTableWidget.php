@@ -8,7 +8,7 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\GdprDsrRequests\GdprDsrRequestResource;
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\GdprDsrRequest;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -34,8 +34,7 @@ class UrgentDsrTableWidget extends BaseWidget
             ->heading('🔥 Pratiche Privacy ad Alta Priorità')
             ->description('Richieste DSR che richiedono azione immediata per evitare sanzioni.')
             ->columns([
-
-                    TextColumn::make('subject_name')->label('Soggetto'),
+                TextColumn::make('subject_name')->label('Soggetto'),
                 TextColumn::make('request_type')
                     ->label('Tipo')
                     ->badge(),
@@ -50,7 +49,7 @@ class UrgentDsrTableWidget extends BaseWidget
                 Action::make('gestisci')
                     ->label('Gestisci')
                     ->icon('heroicon-o-arrow-right-circle')
-                    ->url(fn (GdprDsrRequest $record): string => GdprDsrRequestResource::getUrl('edit', ['record' => $record]))
+                    ->url(fn(GdprDsrRequest $record): string => GdprDsrRequestResource::getUrl('edit', ['record' => $record]))
             ])
             ->paginated(false);  // Niente paginazione, è una top 5
     }

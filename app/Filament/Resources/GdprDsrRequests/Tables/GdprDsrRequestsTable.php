@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\GdprDsrRequests\Tables;
 
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\GdprDsrRequest;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -25,7 +25,7 @@ class GdprDsrRequestsTable
     {
         return $table
             ->columns([
-            TextColumn::make('received_at')
+                TextColumn::make('received_at')
                     ->label('Data Ricezione')
                     ->dateTime('d/m/Y')
                     ->sortable(),
@@ -53,7 +53,6 @@ class GdprDsrRequestsTable
                         'objection' => 'Opposizione al Trattamento',
                         default => $state,
                     }),
-
                 TextColumn::make('due_date')
                     ->label('Data Scadenza')
                     ->dateTime('d/m/Y')
@@ -108,13 +107,11 @@ class GdprDsrRequestsTable
             ])
             ->recordActions([
                 EditAction::make(),
-           //     DeleteAction::make(),
-           //     RestoreAction::make(),
-            //    ForceDeleteAction::make(),
+                //     DeleteAction::make(),
+                //     RestoreAction::make(),
+                //    ForceDeleteAction::make(),
             ])
-            ->toolbarActions([
-
-            ])
+            ->toolbarActions([])
             ->emptyStateHeading('Nessuna richiesta DSR trovata')
             ->emptyStateDescription('Crea la tua prima richiesta DSR.')
             ->emptyStateIcon('heroicon-o-document-text');

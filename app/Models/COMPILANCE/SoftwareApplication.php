@@ -2,6 +2,7 @@
 
 namespace App\Models\COMPILANCE;
 
+use App\Models\PROFORMA\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,8 +16,9 @@ class SoftwareApplication extends Model
     protected $fillable = [
         'name',
         'provider_name',
-        'category_id',
+        'software_category_id',
         'website_url',
+        'company_id'
         'api_url',
         'sandbox_url',
         'api_key_url',
@@ -36,26 +38,16 @@ class SoftwareApplication extends Model
         return $this->hasMany(ApiConfiguration::class);
     }
 
-    public function softwareMappings(): HasMany
+   public function company(): BelongsTo
     {
-        return $this->hasMany(SoftwareMapping::class);
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
+
 
     public function softwareCategory(): BelongsTo
     {
-        return $this->belongsTo(SoftwareCategory::class, 'category_id');
+        return $this->belongsTo(SoftwareCategory::class, 'software_category_id');
     }
 
-    public function companies(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(Company::class)
-            ->withPivot(['status', 'notes', 'apikey', 'wallet_balance'])
-            ->withTimestamps();
-    }
 
-    public function wallets(): HasMany
-    {
-        return $this->hasMany(CompanyWallet::class);
-    }
 }

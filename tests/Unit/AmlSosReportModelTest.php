@@ -1,10 +1,9 @@
 <?php
 
-use App\Models\AmlSosReport;
 use App\Enums\AmlReportStatus;
+use App\Models\COMPILANCE\AmlSosReport;
 
 describe('AmlSosReport Model', function () {
-
     it('uses soft deletes', function () {
         expect(in_array(
             \Illuminate\Database\Eloquent\SoftDeletes::class,
@@ -37,7 +36,8 @@ describe('AmlSosReport Model', function () {
 
     it('has all required fillable fields', function () {
         $fillable = (new AmlSosReport())->getFillable();
-        expect($fillable)->toContain('company_id')
+        expect($fillable)
+            ->toContain('company_id')
             ->toContain('agent_id')
             ->toContain('suspicion_indicators')
             ->toContain('forwarded_to_fiu')

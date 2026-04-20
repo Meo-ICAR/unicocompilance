@@ -8,7 +8,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\GdprDsrRequest;
 use Illuminate\Console\Command;
 
 class EscalateDsrRequests extends Command

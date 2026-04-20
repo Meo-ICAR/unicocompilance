@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\Principals\Imports;
+namespace App\Filament\Resources\Clientis\Imports;
 
-use App\Models\Principal;
+use App\Models\PROFORMA\Clienti;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class PrincipalsImport implements ToModel, WithHeadingRow, WithValidation
+class ClientisImport implements ToModel, WithHeadingRow, WithValidation
 {
-    public function model(array $row): ?Principal
+    public function model(array $row): ?Clienti
     {
-        return new Principal([
+        return new Clienti([
             'name' => $row['name'] ?? null,
             'vat_number' => $row['partita_iva'] ?? null,
             'oam_number' => $row['numero_oam'] ?? null,

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ComplaintRegistries\Schemas;
 
 use App\Enums\ComplaintStatus;
-use App\Models\ComplaintRegistry;
+use App\Models\COMPILANCE\ComplaintRegistry;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -41,13 +41,13 @@ class ComplaintRegistryForm
                         Select::make('category')
                             ->label('Categoria')
                             ->options([
-                                'delay'    => 'Ritardo',
+                                'delay' => 'Ritardo',
                                 'behavior' => 'Comportamento',
-                                'privacy'  => 'Privacy',
-                                'fraud'    => 'Frode',
-                                'quality'  => 'Qualità',
+                                'privacy' => 'Privacy',
+                                'fraud' => 'Frode',
+                                'quality' => 'Qualità',
                                 'contract' => 'Contrattuale',
-                                'other'    => 'Altro',
+                                'other' => 'Altro',
                             ])
                             ->required()
                             ->default('other'),
@@ -56,14 +56,15 @@ class ComplaintRegistryForm
                             ->numeric()
                             ->step(0.01)
                             ->prefix('€')
-                            ->default(0.00)
+                            ->default(0.0)
                             ->placeholder('0.00'),
                         RichEditor::make('description')
                             ->label('Descrizione')
                             ->placeholder('Descrivi dettagliatamente il problema...')
                             ->required()
                             ->columnSpanFull(),
-                    ])->columns(2),
+                    ])
+                    ->columns(2),
                 Section::make('gestione_stato')
                     ->label('Gestione Stato')
                     ->description('Aggiorna lo stato del reclamo')

@@ -1,10 +1,9 @@
 <?php
 
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Illuminate\Support\Carbon;
 
 describe('TrainingRegistry', function () {
-
     it('is valid when no expiry date is set', function () {
         $training = new TrainingRegistry(['valid_until' => null]);
         expect($training->isValid())->toBeTrue();

@@ -2,9 +2,9 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\AmlReportStatus;
-use App\Models\AmlSosReport;
-use App\Models\GdprDsrRequest;
-use App\Models\TrainingRegistry;
+use App\Models\COMPILANCE\AmlSosReport;
+use App\Models\COMPILANCE\GdprDsrRequest;
+use App\Models\COMPILANCE\TrainingRegistry;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 

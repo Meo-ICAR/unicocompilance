@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\COMPILANCE\ClientType;
 use Illuminate\Database\Seeder;
-use App\Models\ClientType;
 
 class ClientTypeSeeder extends Seeder
 {
@@ -18,10 +18,10 @@ class ClientTypeSeeder extends Seeder
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Titolare Autonomo o Contitolare',
-                'purpose' => 'Collaborazione per l\'istruttoria di mutui ipotecari legati a compravendite immobiliari.',
+                'purpose' => "Collaborazione per l'istruttoria di mutui ipotecari legati a compravendite immobiliari.",
                 'data_subjects' => 'Clienti (Acquirenti/Richiedenti mutuo)',
-                'data_categories' => 'Anagrafici, Contatto, Documenti Identità, Dati dell\'immobile',
-                'retention_period' => '10 anni dall\'erogazione (obblighi AML/Civilistici) o 12 mesi se respinta.',
+                'data_categories' => "Anagrafici, Contatto, Documenti Identità, Dati dell'immobile",
+                'retention_period' => "10 anni dall'erogazione (obblighi AML/Civilistici) o 12 mesi se respinta.",
                 'extra_eu_transfer' => 'No',
                 'security_measures' => 'Scambio documenti tramite piattaforme sicure/CRM, crittografia allegati.',
                 'privacy_data' => null,
@@ -31,7 +31,7 @@ class ClientTypeSeeder extends Seeder
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Titolare Autonomo',
-                'purpose' => 'Acquisizione documentazione reddituale e fiscale per l\'istruttoria di finanziamenti aziendali o personali.',
+                'purpose' => "Acquisizione documentazione reddituale e fiscale per l'istruttoria di finanziamenti aziendali o personali.",
                 'data_subjects' => 'Clienti, Amministratori, Soci, Titolari Effettivi',
                 'data_categories' => 'Anagrafici, Documenti Identità, Dati Economici e Finanziari (Bilanci, Unico, CUD)',
                 'retention_period' => '10 anni dalla chiusura del rapporto.',
@@ -47,7 +47,7 @@ class ClientTypeSeeder extends Seeder
                 'purpose' => 'Acquisizione certificazioni stipendiali e TFR per pratiche di Cessione del Quinto e Prestiti Personali.',
                 'data_subjects' => 'Clienti (Dipendenti)',
                 'data_categories' => 'Anagrafici, Documenti Identità, Dati Economici (Buste paga, Certificati di stipendio)',
-                'retention_period' => '10 anni dall\'estinzione del finanziamento.',
+                'retention_period' => "10 anni dall'estinzione del finanziamento.",
                 'extra_eu_transfer' => 'No',
                 'security_measures' => 'Scambio dati cifrato, password protection sui PDF.',
                 'privacy_data' => null,
@@ -70,7 +70,7 @@ class ClientTypeSeeder extends Seeder
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Titolare Autonomo o Responsabile Esterno',
-                'purpose' => 'Emissione polizze CPI (Credit Protection Insurance) collegate all\'erogazione del credito.',
+                'purpose' => "Emissione polizze CPI (Credit Protection Insurance) collegate all'erogazione del credito.",
                 'data_subjects' => 'Clienti (Assicurati)',
                 'data_categories' => 'Anagrafici, Economici, Categorie Particolari (Dati sanitari, questionari anamnestici)',
                 'retention_period' => '10 anni dalla scadenza della polizza.',
@@ -79,7 +79,7 @@ class ClientTypeSeeder extends Seeder
                 'privacy_data' => null,
             ],
             [
-                'name' => 'Procacciatore d\'Affari',
+                'name' => "Procacciatore d'Affari",
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Responsabile Esterno / Incaricato',
@@ -96,10 +96,10 @@ class ClientTypeSeeder extends Seeder
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Responsabile Esterno o Contitolare',
-                'purpose' => 'Istruttoria per prestiti finalizzati all\'acquisto di veicoli e Leasing targato.',
+                'purpose' => "Istruttoria per prestiti finalizzati all'acquisto di veicoli e Leasing targato.",
                 'data_subjects' => 'Clienti (Acquirenti)',
                 'data_categories' => 'Anagrafici, Documenti Identità, Economici (Preventivi, IBAN, Reddito base)',
-                'retention_period' => '10 anni dall\'erogazione.',
+                'retention_period' => "10 anni dall'erogazione.",
                 'extra_eu_transfer' => 'No',
                 'security_measures' => 'Caricamento diretto a portale, divieto di fotocopie non custodite.',
                 'privacy_data' => null,
@@ -187,7 +187,7 @@ class ClientTypeSeeder extends Seeder
                 'is_person' => true,
                 'is_company' => true,
                 'privacy_role' => 'Responsabile Esterno o Titolare Autonomo',
-                'purpose' => 'Sopralluogo e redazione perizia estimativa dell\'immobile a garanzia del finanziamento.',
+                'purpose' => "Sopralluogo e redazione perizia estimativa dell'immobile a garanzia del finanziamento.",
                 'data_subjects' => 'Clienti (Proprietari/Acquirenti)',
                 'data_categories' => 'Anagrafici, Contatti, Dati catastali, Planimetrie',
                 'retention_period' => '10 anni dalla redazione della perizia.',
@@ -340,8 +340,8 @@ class ClientTypeSeeder extends Seeder
             ],
         ];
 
-        foreach ($clientTypes as $type) {
-            ClientType::create($type);
+        foreach ($clientTypes as $clientType) {
+            ClientType::firstOrCreate(['name' => $clientType['name']], $clientType);
         }
     }
 }

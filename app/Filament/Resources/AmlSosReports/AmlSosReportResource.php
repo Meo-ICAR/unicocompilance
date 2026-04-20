@@ -8,7 +8,7 @@ use App\Filament\Resources\AmlSosReports\Pages\EditAmlSosReport;
 use App\Filament\Resources\AmlSosReports\Pages\ListAmlSosReports;
 use App\Filament\Resources\AmlSosReports\Schemas\AmlSosReportForm;
 use App\Filament\Resources\AmlSosReports\Tables\AmlSosReportsTable;
-use App\Models\AmlSosReport;
+use App\Models\COMPILANCE\AmlSosReport;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

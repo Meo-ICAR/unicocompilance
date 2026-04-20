@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\OAM\OamScope;
+use Illuminate\Database\Seeder;
 
 class OamScopeSeeder extends Seeder
 {
@@ -176,7 +176,7 @@ class OamScopeSeeder extends Seeder
         ];
 
         foreach ($oamScopes as $scope) {
-            OamScope::create($scope);
+            OamScope::firstOrCreate(['code' => $scope['code']], $scope);
         }
     }
 }

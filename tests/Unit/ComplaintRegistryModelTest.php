@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\ComplaintRegistry;
+use App\Models\COMPILANCE\ComplaintRegistry;
 
 describe('ComplaintRegistry Model', function () {
-
     it('uses soft deletes', function () {
         expect(in_array(
             \Illuminate\Database\Eloquent\SoftDeletes::class,
@@ -23,7 +22,8 @@ describe('ComplaintRegistry Model', function () {
 
     it('has complaint_number in fillable', function () {
         $fillable = (new ComplaintRegistry())->getFillable();
-        expect($fillable)->toContain('complaint_number')
+        expect($fillable)
+            ->toContain('complaint_number')
             ->toContain('company_id')
             ->toContain('complainant_name')
             ->toContain('status');

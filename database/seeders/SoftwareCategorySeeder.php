@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\COMPILANCE\SoftwareCategory;
+use Illuminate\Database\Seeder;
 
 class SoftwareCategorySeeder extends Seeder
 {
@@ -46,7 +46,7 @@ class SoftwareCategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            SoftwareCategory::create($category);
+            SoftwareCategory::firstOrCreate(['name' => $category['name']], $category);
         }
     }
 }

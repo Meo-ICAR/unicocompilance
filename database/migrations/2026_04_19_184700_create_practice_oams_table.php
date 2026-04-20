@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -62,9 +61,8 @@ return new class extends Migration
             $table->integer('mese')->nullable()->comment('Mese');
             $table->uuid('company_id')->nullable()->comment('ID azienda');
             $table->timestamps();
-            
+
             $table->foreign('oam_code_id')->references('id')->on('oam_codes');
-            $table->foreign('company_id')->references('id')->on('companies');
         });
     }
 

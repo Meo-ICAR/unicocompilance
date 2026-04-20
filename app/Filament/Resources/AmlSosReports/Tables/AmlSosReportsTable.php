@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\AmlSosReports\Tables;
 
 use App\Enums\AmlReportStatus;
-use App\Models\AmlSosReport;
+use App\Models\COMPILANCE\AmlSosReport;
 use App\Services\UnicoDocService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -24,14 +24,13 @@ class AmlSosReportsTable
     {
         return $table
             ->columns([
-              TextColumn::make('practice_reference')
+                TextColumn::make('practice_reference')
                     ->label('Rif. Pratica BPM')
                     ->searchable(),
                 TextColumn::make('agent.name')
                     ->label('Agente')
                     ->searchable()
                     ->sortable(),
-
                 TextColumn::make('status')
                     ->label('Stato')
                     ->badge()

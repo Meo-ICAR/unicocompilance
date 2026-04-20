@@ -7,9 +7,9 @@
 
 namespace App\Services\Integration;
 
-use App\Models\AmlSosReport;
-use App\Models\ComplaintRegistry;
-use App\Models\GdprDsrRequest;
+use App\Models\COMPILANCE\AmlSosReport;
+use App\Models\COMPILANCE\ComplaintRegistry;
+use App\Models\COMPILANCE\GdprDsrRequest;
 
 class RequestSorterService
 {
