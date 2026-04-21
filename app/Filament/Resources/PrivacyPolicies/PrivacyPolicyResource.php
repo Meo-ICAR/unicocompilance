@@ -18,9 +18,13 @@ class PrivacyPolicyResource extends Resource
 {
     protected static ?string $model = PrivacyPolicy::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $recordTitleAttribute = 'nema';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 65;
 
     public static function form(Schema $schema): Schema
     {

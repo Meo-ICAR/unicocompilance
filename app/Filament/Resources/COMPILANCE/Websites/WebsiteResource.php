@@ -20,9 +20,13 @@ class WebsiteResource extends Resource
 {
     protected static ?string $model = Website::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAlt;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
+
+    protected static ?int $navigationSort = 75;
 
     public static function form(Schema $schema): Schema
     {

@@ -19,9 +19,9 @@ class PracticeOamResource extends Resource
 {
     protected static ?string $model = PracticeOam::class;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Compliance';
+    protected static string|UnitEnum|null $navigationGroup = 'AML';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     protected static ?string $navigationLabel = 'OAM Vigilanza';
 
@@ -29,7 +29,7 @@ class PracticeOamResource extends Resource
 
     protected static ?string $pluralModelLabel = 'OAM Vigilanza';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 20;
 
     public static function form(Schema $schema): Schema
     {

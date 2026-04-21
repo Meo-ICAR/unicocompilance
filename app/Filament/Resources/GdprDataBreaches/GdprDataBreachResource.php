@@ -29,9 +29,9 @@ class GdprDataBreachResource extends Resource
 
     protected static ?string $pluralLabel = 'Data Breach GDPR';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Privacy';
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
 
-    protected static ?int $navigationSort = 30;
+    protected static ?int $navigationSort = 10;
 
     public static function form(Schema $schema): Schema
     {

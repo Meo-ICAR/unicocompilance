@@ -18,7 +18,11 @@ class DpiaRiskResource extends Resource
 {
     protected static ?string $model = DpiaRisk::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedExclamationCircle;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 55;
 
     protected static bool $isScopedToTenant = false;
 

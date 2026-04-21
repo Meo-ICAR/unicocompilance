@@ -18,8 +18,12 @@ class ConsentTypeResource extends Resource
 {
     protected static bool $isScopedToTenant = false;
     protected static ?string $model = ConsentType::class;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHandThumbUp;
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 80;
 
     public static function form(Schema $schema): Schema
     {

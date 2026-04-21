@@ -18,9 +18,13 @@ class ProcessingActivityResource extends Resource
 {
     protected static ?string $model = ProcessingActivity::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedListBullet;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 60;
 
     public static function form(Schema $schema): Schema
     {

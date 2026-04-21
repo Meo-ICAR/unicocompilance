@@ -18,9 +18,13 @@ class ClientiEmployeeResource extends Resource
 {
     protected static ?string $model = ClientiEmployee::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
+
+    protected static ?int $navigationSort = 80;
 
     public static function form(Schema $schema): Schema
     {

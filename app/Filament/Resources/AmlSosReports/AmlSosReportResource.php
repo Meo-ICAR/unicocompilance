@@ -29,7 +29,7 @@ class AmlSosReportResource extends Resource
 
     protected static ?string $pluralLabel = 'Segnalazioni AML';
 
-    //  protected static ?string $navigationGroup = 'Compliance';
+    protected static string|\UnitEnum|null $navigationGroup = 'AML';
 
     protected static ?int $navigationSort = 10;
 

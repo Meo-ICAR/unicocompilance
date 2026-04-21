@@ -28,6 +28,8 @@ class ComplaintResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
 
+    protected static ?int $navigationSort = 10;
+
     public static function form(Schema $schema): Schema
     {
         return ComplaintForm::configure($schema);

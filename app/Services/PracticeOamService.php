@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\OAM\OamScope;
+use App\Models\OAM\PracticeOam;
+use App\Models\OAM\PracticeOamBase;
 use App\Models\PROFORMA\Company;
-use App\Models\OamScope;
-use App\Models\Practice;
-use App\Models\PracticeCommission;
-use App\Models\PracticeOam;
-use App\Models\PracticeOamBase;
+use App\Models\PROFORMA\Pratica;
+use App\Models\PROFORMA\Provvigione;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
@@ -50,7 +50,7 @@ class PracticeOamService
             Log::info("Deleted {$deletedCount} practice_oam records for company {$companyId} in date range");
 
             // Step 2: Get practices that meet the criteria
-            $practicesQuery = Practice::where('brokerage_fee', '>', 0)
+            $practicesQuery = Pratica::where('net', '>', 0)
                 ->whereNotIn('tipo_prodotto', ['Polizza', 'Utenza'])
                 ->where(function ($query) use ($endDateCarbon, $startDateCarbon) {
                     $query
@@ -75,7 +75,7 @@ class PracticeOamService
                                 ->orWhere('invoice_at', '>', $startDateCarbon);
                         });
                 })
-                ->orWhereIn('CRM_code', ['QT01118', 'QT01635', 'QT01649', 'QT01660', 'QT01692']);
+                ->orWhereIn('codice_pratica', ['QT01118', 'QT01635', 'QT01649', 'QT01660', 'QT01692']);
 
             // Debug: Log the SQL query
             Log::info('SQL Query: ' . $practicesQuery->toSql());
@@ -109,9 +109,9 @@ class PracticeOamService
                 $liquidato = $practice->net;
                 $erogato_lavorazione = 0;
                 $liquidato_lavorazione = 0;
-                $CRMcode = $practice->CRM_code;
+                $CRMcode = $practice->codice_pratica;
                 $parcticeName = $practice->name;
-                $commissionSums = $this->getPracticeCommissionSums($practice);
+                $commissionSums = $this->getProvvigioniSums($practice);
                 $somma = $commissionSums['somma'];
 
                 if ($somma > 0) {
@@ -142,7 +142,7 @@ class PracticeOamService
                     $assicurazione = $commissionSums['assicurazione'];
                     $provvigione_assicurazione = $commissionSums['provvigione_assicurazione'];
                     if ($assicurazione > 0) {
-                        \Log::info('Assicurazione found for practice: ' . $practice->CRM_code);
+                        \Log::info('Assicurazione found for Pratica: ' . $practice->codice_pratica);
                     }
 
                     /*
@@ -190,7 +190,7 @@ class PracticeOamService
                             $oam_code = $oam_name;
                             //  Log::info("Sync completed for company {$companyId}: {$insertedCount} practice_oam records inserted");
                         }
-                        if (in_array($practice->CRM_code, ['QT01012', 'QT05961', 'QT01875', 'QT01711', 'QT01530', 'QT06176', 'QT05785', 'QT06118', 'QT06110', 'QT06109', 'QT06065', 'QT05915'])) {
+                        if (in_array($practice->codice_pratica, ['QT01012', 'QT05961', 'QT01875', 'QT01711', 'QT01530', 'QT06176', 'QT05785', 'QT06118', 'QT06110', 'QT06109', 'QT06065', 'QT05915'])) {
                             $oam_name = 'Segnalazione mutuo';
                             $oam_code = $oam_name;
                             //  Log::info("Sync completed for company {$companyId}: {$insertedCount} practice_oam records inserted");
@@ -207,11 +207,11 @@ class PracticeOamService
                         ['practice_id' => $practice->id],
                         [
                             'company_id' => $companyId,
-                            'oam_code_id' => $practice->practiceScope?->oam_code_id ?? null,
+                            //  'oam_code_id' => $practice->practiceScope?->oam_code_id ?? null,
                             'oam_code' => $oam_code,
                             'oam_name' => $oam_name,
                             'principal_name' => $practice->principal->name,
-                            'CRM_code' => $practice->CRM_code ?? null,
+                            'CRM_code' => $practice->codice_pratica ?? null,
                             'practice_name' => $practice->name ?? null,
                             //    'type' => $tipoProdotto,
                             'start_date' => $startDate,
@@ -277,9 +277,9 @@ class PracticeOamService
     /**
      * Get practice commission sums grouped by tipo
      */
-    private function getPracticeCommissionSums(Practice $practice): array
+    private function getProvvigioniSums(Practice $practice): array
     {
-        $commissions = PracticeCommission::where('practice_id', $practice->id)->get();
+        $commissions = Provvigioni::where('id_pratica', $practice->id)->get();
 
         // Debug: Check if commissions exist
         $n = $commissions->count();
@@ -304,7 +304,7 @@ class PracticeOamService
         foreach ($commissions as $commission) {
             $i++;
             //    Log::info('Commission ' . $i . " data for practice {$practice->id}: " . json_encode($commission));
-            $amount = $commission->amount ?? 0;
+            $amount = $commission->importo ?? 0;
             //  Log::info("Commission data for practice {$practice->id}: " . json_encode($commission));
 
             $tipo = strtolower($commission->tipo ?? '');
@@ -388,9 +388,24 @@ class PracticeOamService
         $startDateCarbon = Carbon::parse($startDate);
         $endDateCarbon = Carbon::parse($endDate);
 
-        $totalPractices = Practice::where('company_id', $companyId)->count();
+        $totalPractices = Pratica::where('company_id', $companyId)->count();
 
-        $eligiblePractices = Practice::where('company_id', $companyId)
+        /*
+         * if ($practiceStatus) {
+         *        $existing->update(['status' => $practiceStatus->status,
+         *            'practice_status_id' => $practiceStatus->id]);
+         *        if ($practiceStatus->is_rejected && !$existing->isPerfectedStatus() && empty($existing->rejected_at)) {
+         *            $rejectedAt = $existing->inserted_at->addMonth();
+         *            if ($rejectedAt >= now()) {
+         *                $rejectedAt = now();
+         *            }
+         *            // TODO: inviare email al cliente
+         *            $existing->update(['rejected_at' => $rejectedAt, 'status' => 'rejected']);
+         *        }
+         *    }
+         */
+
+        $eligiblePractices = Pratica::where('company_id', $companyId)
             ->whereNull('rejected_at')
             ->where(function ($query) use ($startDateCarbon, $endDateCarbon) {
                 // Practices sent before end date AND (perfected after start date OR not perfected yet)

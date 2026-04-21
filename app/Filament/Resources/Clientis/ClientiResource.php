@@ -34,6 +34,8 @@ class ClientiResource extends Resource
 
     protected static ?string $navigationLabel = 'Istituti';
 
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $modelLabel = 'Istituto';
 
     protected static ?string $pluralModelLabel = 'Istituti';

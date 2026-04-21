@@ -28,9 +28,9 @@ class GdprDsrRequestResource extends Resource
 
     protected static ?string $pluralLabel = 'Richieste Privacy';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Privacy';
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
 
-    protected static ?int $navigationSort = 60;
+    protected static ?int $navigationSort = 20;
 
     public static function form(Schema $schema): Schema
     {

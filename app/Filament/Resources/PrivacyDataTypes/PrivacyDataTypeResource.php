@@ -18,8 +18,12 @@ class PrivacyDataTypeResource extends Resource
 {
     protected static ?string $model = PrivacyDataType::class;
     protected static bool $isScopedToTenant = false;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 70;
 
     public static function form(Schema $schema): Schema
     {

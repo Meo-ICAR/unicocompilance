@@ -18,9 +18,13 @@ class PolicyAcknowledgmentResource extends Resource
 {
     protected static ?string $model = PolicyAcknowledgment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCheckBadge;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy & GDPR';
+
+    protected static ?int $navigationSort = 90;
 
     public static function form(Schema $schema): Schema
     {

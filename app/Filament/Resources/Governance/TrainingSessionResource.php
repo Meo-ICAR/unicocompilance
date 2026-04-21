@@ -8,6 +8,7 @@ use App\Filament\Resources\Governance\Pages\ListTrainingSessions;
 use App\Models\COMPILANCE\TrainingSession;
 use App\Models\Agent;
 use App\Models\Employee;
+use Filament\Support\Icons\Heroicon;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -36,13 +37,17 @@ class TrainingSessionResource extends Resource
 {
     protected static ?string $model = TrainingSession::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
     protected static ?string $navigationLabel = 'Sessioni di Formazione';
 
     protected static ?string $slug = 'governance/training-sessions';
 
     protected static ?string $recordTitleAttribute = 'course_name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
+
+    protected static ?int $navigationSort = 45;
 
     protected static ?string $cluster = GovernanceCluster::class;
 

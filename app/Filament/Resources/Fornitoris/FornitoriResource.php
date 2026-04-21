@@ -29,6 +29,8 @@ class FornitoriResource extends Resource
 
     protected static ?string $navigationLabel = 'Agenti';
 
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $modelLabel = 'Agente';
 
     protected static ?string $pluralModelLabel = 'Agenti';
