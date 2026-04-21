@@ -35,7 +35,7 @@ class ClientiEmployeeSeeder extends Seeder
         $employees = DB::connection('bpm')->table('employees')->limit(10)->get();
 
         $clientiEmployees = [];
-        $recordId = 0;
+        $recordId = 100;  // Start from 100 to avoid conflicts with existing records
 
         foreach ($clients as $client) {
             // Assign 2-3 employees per client

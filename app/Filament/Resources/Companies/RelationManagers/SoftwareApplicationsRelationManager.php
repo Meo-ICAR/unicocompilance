@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Companies\RelationManagers;
 
-use App\Models\SoftwareApplication;
+use App\Models\COMPILANCE\SoftwareApplication;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;

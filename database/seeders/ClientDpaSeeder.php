@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\COMPILANCE\ClientDpa;
-use App\Models\PROFORMA\Company;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,15 +13,8 @@ class ClientDpaSeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing data
-        ClientDpa::query()->delete();
-
-        // Get the first company to satisfy foreign key constraints
-        $company = Company::first();
-        if (!$company) {
-            $this->command->error('No company found. Please run CompanySeeder first.');
-            return;
-        }
+        // Use a fixed company UUID since companies table is in different database
+        $companyUuid = '5c044917-15b3-4471-90c9-38061fcca754';
 
         // DPA data from SQL
         $dpas = [
@@ -36,9 +28,9 @@ class ClientDpaSeeder extends Seeder
                 'allows_general_subprocessors' => false,
                 'signed_at' => '2025-01-28 07:17:29',
                 'valid_until' => '2027-01-28',
-                'model_id' => '',
-                'model_type' => '1',
-                'company_id' => $company->id,
+                'model_id' => null,
+                'model_type' => null,
+                'company_id' => $companyUuid,
                 'created_at' => '2026-03-28 07:17:29',
                 'updated_at' => '2026-03-28 07:17:29',
             ],
@@ -52,9 +44,9 @@ class ClientDpaSeeder extends Seeder
                 'allows_general_subprocessors' => true,
                 'signed_at' => '2023-03-28 06:17:29',
                 'valid_until' => '2026-02-28',
-                'model_id' => '',
-                'model_type' => '2',
-                'company_id' => $company->id,
+                'model_id' => null,
+                'model_type' => null,
+                'company_id' => $companyUuid,
                 'created_at' => '2026-03-28 07:17:29',
                 'updated_at' => '2026-03-28 07:17:29',
             ],
@@ -68,9 +60,9 @@ class ClientDpaSeeder extends Seeder
                 'allows_general_subprocessors' => false,
                 'signed_at' => '2024-03-28 07:17:29',
                 'valid_until' => '2027-03-28',
-                'model_id' => '',
-                'model_type' => '3',
-                'company_id' => $company->id,
+                'model_id' => null,
+                'model_type' => null,
+                'company_id' => $companyUuid,
                 'created_at' => '2026-03-28 07:17:29',
                 'updated_at' => '2026-03-28 07:17:29',
             ],
@@ -84,19 +76,14 @@ class ClientDpaSeeder extends Seeder
                 'allows_general_subprocessors' => false,
                 'signed_at' => null,
                 'valid_until' => null,
-                'model_id' => '',
-                'model_type' => '4',
-                'company_id' => $company->id,
+                'model_id' => null,
+                'model_type' => null,
+                'company_id' => $companyUuid,
                 'created_at' => '2026-03-28 07:17:29',
                 'updated_at' => '2026-03-28 07:17:29',
             ],
         ];
 
-        // Insert in chunks to avoid memory issues
-        foreach (array_chunk($dpas, 100) as $chunk) {
-            DB::connection('mariadb')->table('client_dpas')->insert($chunk);
-        }
-
-        $this->command->info(count($dpas) . ' DPA records created.');
+        DB::table('client_dpas')->insert($dpas);
     }
 }

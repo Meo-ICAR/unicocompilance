@@ -33,6 +33,19 @@ class DatabaseSeeder extends Seeder
             ClientiSeeder::class,
             ClientiEmployeeSeeder::class,
             ClientDpaSeeder::class,
+            AuthorizationSeeder::class,
+            CompanyPolicySeeder::class,
+            ConsentTypeSeeder::class,
+            DpaSeeder::class,
+            DpiaSeeder::class,
+            DpiaRiskSeeder::class,
+            PolicyAcknowledgmentSeeder::class,
+            PolicyVersionSeeder::class,
+            PrivacyPolicySeeder::class,
+            ProcessingActivitySeeder::class,
+            RemediationSeeder::class,
+            PrivacyDataTypeSeeder::class,
+            PrivacyLegalBaseSeeder::class,
         ]);
     }
 }

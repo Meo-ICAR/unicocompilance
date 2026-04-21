@@ -22,6 +22,8 @@ return new class extends Migration {
             $table->string('api_key_url')->nullable();
             $table->text('api_parameters')->nullable();
             $table->boolean('is_cloud')->default(true)->comment('Indica se il software è SaaS/Cloud o On-Premise');
+            $table->boolean('is_data_eu')->default(true)->comment('Indica se i dati sono memorizzati in Europa');
+            $table->boolean('is_iso27001_certified')->default(false)->comment('Indica se il software è certificato ISO 27001');
             $table->string('apikey')->nullable()->comment('API Key per il software');
             $table->decimal('wallet_balance', 10, 2)->nullable()->comment('Saldo del wallet');
             $table->timestamps();

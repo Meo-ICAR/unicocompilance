@@ -29,7 +29,7 @@ class GdprDataBreachResource extends Resource
 
     protected static ?string $pluralLabel = 'Data Breach GDPR';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Compliance';
+    protected static string|\UnitEnum|null $navigationGroup = 'Privacy';
 
     protected static ?int $navigationSort = 30;
 

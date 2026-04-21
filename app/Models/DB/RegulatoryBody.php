@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\COMPILANCE\Employee;
+use App\Models\PROFORMA\Clienti;
+use App\Models\PROFORMA\Forinitori;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class RegulatoryBody extends Model
 {
-    protected $connection = 'mysql_compliance';
+    protected $connection = 'db';
 
     protected $fillable = [
         'name',
@@ -22,12 +25,12 @@ class RegulatoryBody extends Model
 
     public function agents(): HasMany
     {
-        return $this->hasMany(Agent::class);
+        return $this->hasMany(Forinitori::class);
     }
 
     public function principals(): HasMany
     {
-        return $this->hasMany(Principal::class);
+        return $this->hasMany(Clienti::class);
     }
 
     public function employees(): HasMany

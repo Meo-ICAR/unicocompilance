@@ -10,26 +10,22 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('client_dpas', function (Blueprint $table) {
-            $table->bigInteger('id')->unsigned()->default(0);
-            $table->string('name', 255);
-            $table->string('status', 255);
+        Schema::connection('mysql_compliance')->create('client_dpas', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('company_id');
+            $table->string('name');
+            $table->string('status');
             $table->text('processing_nature_and_purpose');
             $table->json('data_categories');
             $table->json('data_subjects');
             $table->boolean('allows_general_subprocessors')->default(false);
             $table->timestamp('signed_at')->nullable();
             $table->date('valid_until')->nullable();
-            $table->string('model_id', 255);
-            $table->string('model_type', 255);
-            $table->uuid('company_id');
+            $table->nullableMorphs('model');
             $table->timestamps();
             $table->softDeletes();
 
-            // Indexes
-            $table->primary('id');
             $table->index(['company_id', 'status']);
-            $table->index(['model_type', 'model_id']);
             $table->index('valid_until');
         });
     }
@@ -39,6 +35,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('client_dpas');
+        Schema::connection('mysql_compliance')->dropIfExists('client_dpas');
     }
 };

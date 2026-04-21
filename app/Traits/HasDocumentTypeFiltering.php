@@ -26,7 +26,7 @@ trait HasDocumentTypeFiltering
         return DocumentType::where("is_{$targetType}", true)
             ->orWhere('is_company', true)
             ->pluck('name', 'id')
-            ->sort()
+            ->sort()..
             ->toArray();
     }
 

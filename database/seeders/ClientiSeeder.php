@@ -22,14 +22,17 @@ class ClientiSeeder extends Seeder
             return;
         }
 
+        // Clear existing data
+        Clienti::query()->delete();
+
         // Create some basic client records
         $clients = [
             [
                 'id' => Str::uuid(),
                 'company_id' => $company->id,
                 'name' => 'Vitanuova spa',
-                'business_name' => 'Vitanuova spa',
-                'customertype_id' => 1, // Assuming ClientType with ID 1 exists
+                'nome' => 'Vitanuova spa',
+                'customertype_id' => 1,  // Assuming ClientType with ID 1 exists
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -38,7 +41,7 @@ class ClientiSeeder extends Seeder
                 'id' => Str::uuid(),
                 'company_id' => $company->id,
                 'name' => 'ING BANK spa',
-                'business_name' => 'ING BANK spa',
+                'nome' => 'ING BANK spa',
                 'customertype_id' => 1,
                 'is_active' => true,
                 'created_at' => now(),
@@ -48,7 +51,7 @@ class ClientiSeeder extends Seeder
                 'id' => Str::uuid(),
                 'company_id' => $company->id,
                 'name' => 'IFIS spa',
-                'business_name' => 'IFIS spa',
+                'nome' => 'IFIS spa',
                 'customertype_id' => 1,
                 'is_active' => true,
                 'created_at' => now(),
@@ -58,7 +61,7 @@ class ClientiSeeder extends Seeder
                 'id' => Str::uuid(),
                 'company_id' => $company->id,
                 'name' => 'BANCA POPOLARE DI PUGLIA E BASILICATA',
-                'business_name' => 'BANCA POPOLARE DI PUGLIA E BASILICATA',
+                'nome' => 'BANCA POPOLARE DI PUGLIA E BASILICATA',
                 'customertype_id' => 1,
                 'is_active' => true,
                 'created_at' => now(),
@@ -68,7 +71,7 @@ class ClientiSeeder extends Seeder
                 'id' => Str::uuid(),
                 'company_id' => $company->id,
                 'name' => 'MK CAPITAL',
-                'business_name' => 'MK CAPITAL',
+                'nome' => 'MK CAPITAL',
                 'customertype_id' => 1,
                 'is_active' => true,
                 'created_at' => now(),
@@ -78,7 +81,7 @@ class ClientiSeeder extends Seeder
 
         // Insert in chunks
         foreach (array_chunk($clients, 100) as $chunk) {
-            DB::connection('mariadb')->table('clientis')->insert($chunk);
+            DB::connection('mysql_proforma')->table('clientis')->insert($chunk);
         }
 
         $this->command->info(count($clients) . ' client records created.');

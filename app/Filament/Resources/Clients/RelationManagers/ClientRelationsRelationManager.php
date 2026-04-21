@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Clients\RelationManagers;
 
+use App\Models\COMPILANCE\ClientType;
 use App\Models\ClientRelation;
-use App\Models\ClientType;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;

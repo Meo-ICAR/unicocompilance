@@ -18,6 +18,7 @@ class Complaint extends Model
     protected $table = 'complaints';
 
     protected $fillable = [
+        'company_id',
         'client_id',
         'employee_id',
         'received_at',

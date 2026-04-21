@@ -12,6 +12,8 @@ class DocumentType extends Model
 {
     use HasFactory, SoftDeletes;  // , Userstamps;
 
+    protected $connection = 'doc';
+
     protected $fillable = [
         'name',
         'description',

@@ -34,7 +34,7 @@ class SuspiciousActivityReport extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(\App\Models\PROFORMA\Client::class);
     }
 
     public function reporter(): MorphTo
@@ -44,6 +44,6 @@ class SuspiciousActivityReport extends Model
 
     public function company(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
+        return $this->belongsTo(\App\Models\PROFORMA\Company::class, 'company_id', 'id');
     }
 }

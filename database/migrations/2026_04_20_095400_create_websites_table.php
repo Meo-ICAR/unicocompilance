@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->string('name')->comment('Nome del sito (es. Portale Agenti Roma)');
             $table->string('domain')->comment('Dominio o sottodominio (es. agenzia-x.mediaconsulence.it)');
             $table->string('type')->nullable()->comment('Tipologia sito (Vetrina, Portale, Landing)');
-            $table->unsignedInteger('principal_id')->nullable()->comment('Mandante di riferimento per landing dedicate');
+            $table->unsignedInteger('clienti_id')->nullable()->comment('Mandante di riferimento per landing dedicate');
             $table->boolean('is_active')->default(true)->comment('Stato del sito (online/offline)');
             $table->boolean('is_typical')->default(true)->comment('Sito utilizzato per attività tipica');
             $table->date('privacy_date')->nullable()->comment('Data aggiornamento privacy');

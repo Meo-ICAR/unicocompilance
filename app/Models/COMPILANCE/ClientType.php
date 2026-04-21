@@ -2,6 +2,8 @@
 
 namespace App\Models\COMPILANCE;
 
+use App\Models\PROFORMA\Client;
+use App\Models\PROFORMA\Clienti;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
@@ -41,12 +43,12 @@ class ClientType extends Model
     // Relationships
     public function clients(): HasMany
     {
-        return $this->hasMany(\App\Models\PROFORMA\Client::class);
+        return $this->hasMany(Client::class);
     }
 
     public function clienti(): HasMany
     {
-        return $this->hasMany(\App\Models\PROFORMA\Clienti::class, 'customertype_id');
+        return $this->hasMany(Clienti::class, 'customertype_id');
     }
 
     // Scopes

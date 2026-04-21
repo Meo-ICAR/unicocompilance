@@ -58,16 +58,9 @@ class WebsitesRelationManager extends RelationManager
                             $set('domain', '');
                         }
                     }),
-                TextInput::make('domain')
-                    ->label('Dominio')
-                    ->helperText("Dominio estratto automaticamente dall'URL")
-                    ->readOnly()
-                    ->maxLength(255),
-                TextInput::make('url_transparency')
-                    ->label('URL Trasparenza')
-                    ->url()
-                    ->maxLength(255)
-                    ->helperText('URL della pagina trasparenza se diversa dal sito principale'),
+                Toggle::make('is_active')
+                    ->label('Attivo')
+                    ->default(true),
                 Textarea::make('description')
                     ->label('Descrizione')
                     ->maxLength(500)
@@ -78,18 +71,29 @@ class WebsitesRelationManager extends RelationManager
                         'corporate' => 'Sito Corporate',
                         'institutional' => 'Sito Istituzionale',
                         'portal' => 'Portale',
+                        'social' => 'Sito Social',
+                        'landing' => 'Landing page',
                         'ecommerce' => 'E-commerce',
                         'blog' => 'Blog',
                         'other' => 'Altro',
                     ])
                     ->default('corporate'),
-                Toggle::make('is_active')
-                    ->label('Attivo')
-                    ->default(true),
+                TextInput::make('domain')
+                    ->label('Dominio')
+                    ->helperText("Dominio estratto automaticamente dall'URL")
+                    ->readOnly()
+                    ->maxLength(255),
                 Toggle::make('requires_transparency')
                     ->label('Richiede Trasparenza')
                     ->default(false)
+                    ->live()
                     ->helperText('Se true, il sito verrà scansionato per documenti di trasparenza'),
+                TextInput::make('url_transparency')
+                    ->visible(fn($get) => $get('requires_transparency') === true)
+                    ->label('URL Trasparenza')
+                    ->url()
+                    ->maxLength(255)
+                    ->helperText('URL della pagina trasparenza se diversa dal sito principale'),
             ]);
     }
 
