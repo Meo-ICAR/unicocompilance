@@ -14,7 +14,7 @@ class ClientiEmployee extends Model
 {
     use HasFactory;  // , HasUserstamps;
 
-    protected $connection = 'mariadb';
+    protected $connection = 'mysql_compliance';
 
     protected $table = 'clienti_employees';
 

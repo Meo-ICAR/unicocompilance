@@ -4,6 +4,7 @@ namespace App\Filament\RelationManagers;
 
 // use App\Filament\Actions\BulkClassifyDocumentsAction;
 // use App\Filament\Actions\ClassifyDocumentAction;
+use App\Models\DOC\DocumentStatus;
 use App\Models\DOC\DocumentType;
 use App\Models\PROFORMA\Company;
 use App\Models\Document;
@@ -206,7 +207,7 @@ class DocumentsRelationManager extends RelationManager
                                         ->preload()
                                         ->default(function () {
                                             // Get first status as default
-                                            return \App\Models\DocumentStatus::first()?->id;
+                                            return DocumentStatus::first()?->id;
                                         })
                                         ->required(),
                                     Toggle::make('is_signed')

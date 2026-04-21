@@ -45,48 +45,35 @@ class ClientiForm
                     ->description('Dati principali della banca o finanziaria.')
                     ->icon('heroicon-o-building-library')
                     ->schema([
-                        Grid::make(3)->schema([
+                        Grid::make(1)->schema([
                             TextInput::make('name')
                                 ->label('Nome Istituto / Finanziaria')
                                 ->required()
                                 ->maxLength(255)
                                 ->columnSpan(2),
-                            Select::make('type')
-                                ->label('Tipologia')
-                                ->options([
-                                    'Banca' => 'Banca',
-                                    'Finanziaria' => 'Finanziaria',
-                                    'Assicurazione' => 'Assicurazione',
-                                    'Broker' => 'Broker Assicurativo',
-                                    'Utility' => 'Utility',
-                                ])
-                                ->searchable(),
-                            Toggle::make('is_active')
-                                ->label('Convenzione Attiva')
-                                ->default(true)
-                                ->inline(false)
-                                ->helperText('Disattiva per nascondere questo istituto dalle nuove pratiche.'),
-                            Select::make('submission_type')
-                                ->label('Modalita Inoltro')
-                                ->options([
-                                    'no' => 'Non Specificato',
-                                    'accesso portale' => 'Accesso Portale',
-                                    'inoltro' => 'Inoltro',
-                                ])
-                                ->default('no')
-                                ->searchable()
-                                ->helperText('Tipologia del mandante per classificazione interna'),
-                        ]),
-                        Grid::make(2)->schema([
                             Toggle::make('is_dummy')
                                 ->label('Istituto Fittizio')
                                 ->default(false)
                                 ->inline(false)
-                                ->helperText('Usa per censire banche concorrenti o ai fini istruttoria'),
+                                ->live()
+                                ->helperText('Usato solo per censire banche concorrenti o per istruttoria'),
                         ]),
+                        Select::make('type')
+                            ->label('Tipologia')
+                            ->options([
+                                'Banca' => 'Banca',
+                                'Finanziaria' => 'Finanziaria',
+                                'Assicurazione' => 'Assicurazione',
+                                'Broker' => 'Broker Assicurativo',
+                                'Utility' => 'Utility',
+                            ])
+                            ->default('Banca')
+                            ->searchable()
+                            ->helperText('Tipologia del mandante per classificazione interna'),
                     ]),
                 // 2. SEZIONE DATI FISCALI E REGOLAMENTARI (OAM/IVASS)
                 Section::make('Codici e Dati Fiscali')
+                    ->visible(fn($get) => !$get('is_dummy'))
                     ->description('Identificativi fiscali e iscrizioni agli albi di vigilanza.')
                     ->icon('heroicon-o-identification')
                     ->schema([
@@ -126,16 +113,22 @@ class ClientiForm
                     ]),
                 // 3. SEZIONE DATI DEL MANDATO
                 Section::make('Dettagli Mandato e Convenzione')
+                    ->visible(fn($get) => !$get('is_dummy'))
                     ->description("Estremi del contratto stipulato tra l'Agenzia e l'Istituto.")
                     ->icon('heroicon-o-document-text')
                     ->schema([
                         Grid::make(3)->schema([
+                            Toggle::make('is_reported')
+                                ->label('Accordi di Segnalazione')
+                                ->default(false)
+                                ->inline(false)
+                                ->helperText('Attiva se esistono solo accordi di segnalazione con questo istituto. Tutte le pratiche verranno riportate come segnalate nelle semestrali OAM.'),
                             TextInput::make('mandate_number')
                                 ->label('Protocollo / N° Mandato')
                                 ->maxLength(100)
                                 ->columnSpan(2),
                             Select::make('status')
-                                ->label('Stato Operativo')
+                                ->label('Stato Formale')
                                 ->options([
                                     'ATTIVO' => 'Attivo',
                                     'SCADUTO' => 'Scaduto',
@@ -164,14 +157,22 @@ class ClientiForm
                     ]),
                 // 4. SEZIONE NOTE E ACCORDI
                 Section::make('Accordi Commerciali')
+                    ->visible(fn($get) => !$get('is_dummy'))
                     ->icon('heroicon-o-pencil-square')
                     ->schema([
                         Grid::make(2)->schema([
-                            Toggle::make('is_reported')
-                                ->label('Accordi di Segnalazione')
-                                ->default(false)
+                            Toggle::make('is_active')
+                                ->label('Convenzione Attiva')
+                                ->default(true)
                                 ->inline(false)
-                                ->helperText('Attiva se esistono accordi di segnalazione con questo istituto.'),
+                                ->helperText('Disattiva per nascondere questo istituto dalle nuove pratiche.'),
+                            Select::make('submission_type')
+                                ->label('Modalita Inoltro pratiche')
+                                ->options([
+                                    'no' => 'Non Specificato',
+                                    'accesso portale' => 'Accesso Portale',
+                                    'inoltro' => 'Inoltro',
+                                ]),
                             Toggle::make('is_exclusive')
                                 ->label('Mandato in Esclusiva')
                                 ->default(false)

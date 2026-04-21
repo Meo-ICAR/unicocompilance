@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\DOC\DocumentType;
 use App\Models\PROFORMA\Client;
 use App\Models\PROFORMA\Clienti;
-use App\Models\PROFORMA\DocumentType;
 use App\Models\PROFORMA\Fornitore;
 use App\Models\PROFORMA\Pratiche;
 
@@ -26,6 +26,7 @@ trait HasDocumentTypeFiltering
         return DocumentType::where("is_{$targetType}", true)
             ->orWhere('is_company', true)
             ->pluck('name', 'id')
+            ->sort()
             ->toArray();
     }
 

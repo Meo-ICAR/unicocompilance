@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             ClientiSeeder::class,
             ClientiEmployeeSeeder::class,
+            ClientDpaSeeder::class,
         ]);
     }
 }
